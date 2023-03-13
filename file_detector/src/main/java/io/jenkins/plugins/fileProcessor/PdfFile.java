@@ -2,10 +2,11 @@ package io.jenkins.plugins.fileProcessor;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -14,30 +15,58 @@ public class PdfFile {
 
     private File file;
     private PDDocument doc;
-    private PDDocumentInformation pdd;
+    //private PDDocumentInformation pdd;
 
     public PdfFile(String fileName, String directory) throws IOException {
-
 
 
         this.file = new File(directory+fileName);
         this.doc = PDDocument.load(file);
         PDDocumentInformation pdd = this.doc.getDocumentInformation();
         this.fileName = fileName;
-        this.creationDate = (GregorianCalendar) pdd.getCreationDate();
         this.author = pdd.getAuthor();
         this.title = pdd.getTitle();
         this.subject = pdd.getSubject();
-        this.creator = pdd.getCreator();
-        this.lastModificationDate = (GregorianCalendar) pdd.getModificationDate();
-
         this.pageCount = doc.getNumberOfPages();
         this.fileSize = file.length();
+
+        //Laura stuff//
+        this.fileMonth = (pdd.getCreationDate()).get(Calendar.MONTH);
+        this.fileDay = (pdd.getCreationDate()).get(Calendar.DATE);
+        this.fileYear = (pdd.getCreationDate()).get(Calendar.YEAR);
+        this.fileHour = (pdd.getCreationDate()).get(Calendar.HOUR);
+        this.fileMinute = (pdd.getCreationDate()).get(Calendar.MINUTE);
+        this.fileSecond = (pdd.getCreationDate()).get(Calendar.SECOND);
+
+
+        int count = 0;
+        PDFTextStripper stripper = new PDFTextStripper();
+        stripper.setEndPage(20);
+        String text = stripper.getText(doc);
+        String[] texts = text.split(" ");
+        for (String txt : texts) {
+            if(txt.trim().length() != 0)
+            {
+                count = count + 1;
+            }
+        }
+        this.wordCount = count;
+
+
+        //end of Laura stuff//
+
         doc.close();
 
     }
 
-
+    //add dateCreation Laura
+    private int fileMonth;
+    private int fileDay;
+    private int fileYear;
+    private int fileHour;
+    private int fileMinute;
+    private int fileSecond;
+    //end of Laura section
     private int wordCount;
     private GregorianCalendar lastModificationDate;
     private String creator;
@@ -59,9 +88,30 @@ public class PdfFile {
     }};
 
     //Get and set methods
+    //laura section//
+    public int getFileMonth(){
+        return this.fileMonth;
+    }
+    public int getFileDay(){
+        return this.fileDay;
+    }
+    public int getFileYear(){
+        return this.fileYear;
+    }
+    public int getFileHour(){
+        return this.fileHour;
+    }
+    public int getFileMinute(){
+        return this.fileMinute;
+    }
+    public int getFileSecond(){
+        return this.fileSecond;
+    }
+    //end Laura section//
     public void setWordCount(Integer count){
         this.wordCount = count;
     }
+
     public Integer getWordCount(){
         return this.wordCount;
     }
@@ -115,8 +165,4 @@ public class PdfFile {
     public void OutPutJson(){
 
     }
-
-
-
-
 }

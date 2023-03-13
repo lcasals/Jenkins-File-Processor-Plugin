@@ -9,25 +9,22 @@ public class driver {
     public static void main(ArrayList<String> pdfArray, String dir) throws IOException {
 
         System.out.print("Running second program\n");
-        FileObjectCreation createobj = new FileObjectCreation();
+        FileObjectCreation create = new FileObjectCreation();
 
-        //createobj.createDocxObjects(docxarray);
-        createobj.createPdfObjects(pdfArray, dir);
+        create.createPdfObjects(pdfArray, dir);
 
-        //for(DocxFile docs: createobj.getListOfDocxObjects()){
-         //   System.out.println(docs.getFileName()+"\n");
-        //}
-
-        for(PdfFile pdf: createobj.getListOfPdfObjects()){
+        for(PdfFile pdf: create.getListOfPdfObjects()){
 
             System.out.println("name of file: " + pdf.getFileName()+"\n");
             System.out.println("name of author: " + pdf.getAuthor()+"\n");
             System.out.println("page count: " + pdf.getPageCount()+"\n");
-            System.out.println("file size: " + pdf.getFileSize()+"\n");
+            System.out.println("file size: " + (pdf.getFileSize()/1000) +"KB "
+                    + pdf.getFileSize()+ " bytes" + "\n");
             System.out.println("word count: " + pdf.getWordCount()+"\n");
-            System.out.println("date created: " + pdf.getDateOfCreation()+"\n\n-------------------");
-
+            System.out.println("date created: " + pdf.getFileMonth()+"/"+pdf.getFileDay()+
+                    "/"+pdf.getFileYear()+" " +pdf.getFileHour()+":"+pdf.getFileMinute()+":"
+                    +pdf.getFileSecond()+"\n");
         }
-
     }
 }
+

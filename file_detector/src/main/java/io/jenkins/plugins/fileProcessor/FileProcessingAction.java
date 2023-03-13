@@ -40,15 +40,16 @@ public class FileProcessingAction implements RunAction2 {
 
 
 
-    private String name;
+    private String directory;
     //constructor
-    public FileProcessingAction() {
-        //this.name = name;
+    public FileProcessingAction(String directory) {
+        this.directory = directory;
     }
     //getter for the name
     public String getName() {
-        return name;
+        return directory;
     }
+    
 
 
 

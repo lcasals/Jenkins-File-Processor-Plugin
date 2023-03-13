@@ -1,25 +1,24 @@
 package io.jenkins.plugins.fileProcessor;
 
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
+
 public class FileTypeDetection {
+    //Path to input
     public FileTypeDetection(String DIRECTORY){
-        this.DIRECTORY = DIRECTORY;
+        this.directory = DIRECTORY;
     }
-    //private static String DIRECTORY = System.getProperty("user.dir") + "\\..\\FileInput";;//path to input
-    //private static String DIRECTORY = System.getProperty("user.dir")+"\\FileInput";
-    private static String DIRECTORY = System.getProperty("user.dir") + File.separator + ".." + File.separator + "FileInput";
-
-    public static String getDirectory(){
-        return DIRECTORY;
+    private static String directory;
+    public static String getDirectory()
+    {
+        return directory;
     }
-    public static void setDIRECTORY(String dir){
-        DIRECTORY = dir;
 
+    public static void setDIRECTORY(String dir)
+    {
+        directory = dir;
     }
 
     //getting file counts --> convert counts to hashmaps "name / count" easier to access and less commands.
@@ -39,7 +38,7 @@ public class FileTypeDetection {
     private static ArrayList<String> docxNames= new ArrayList<>();
     private static ArrayList<String> pdfNames = new ArrayList<>();
 
-    //if data structure for a specific file typ.
+    //if data structure for a specific file type is not created and added to the file organization then it will be added here
     private static ArrayList<String> unknownNames = new ArrayList<>();
 
     public static ArrayList<ArrayList<String>>  fileArrayOfArrays= new ArrayList<>();
@@ -53,18 +52,14 @@ public class FileTypeDetection {
 
 
     public static void main(String[] args) throws IOException {
-
-        setDIRECTORY(DIRECTORY);
-
-        System.out.println("\n\t Traversing files in directory: " + DIRECTORY + "\n");
+        setDIRECTORY(args[0]);
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        System.out.println("\n\t Traversing files in directory: " + directory + "\n");
 
         //Begins traversing file directory
         try {
-            //prints out the current working directory
-            System.out.println(System.getProperty("user.dir"));
 
-
-            for (File f : new File(DIRECTORY).listFiles()) {
+            for (File f : new File(directory).listFiles()) {
 
                 updateTotalCount();
                 String fileName = f.toString();
@@ -103,8 +98,8 @@ public class FileTypeDetection {
             //printing content of each array
             System.out.println(
                     "---------------------------------------------\n" +
-                    "\t\tfiles in docx\n" +
-                    "---------------------------------------------");
+                            "\t\tfiles in docx\n" +
+                            "---------------------------------------------");
 
             for (String s : docxNames) {
                 System.out.println("|\t"+ s + "\t\t\t|\n");
@@ -138,9 +133,6 @@ public class FileTypeDetection {
         }
 
         driver.main(pdfNames, getDirectory());
-
-
-
 
     }
 

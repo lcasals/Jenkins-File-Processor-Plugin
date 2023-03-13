@@ -19,16 +19,16 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class FileProcessingBuilder extends Builder implements SimpleBuildStep {
 
     //Getters and setters for Parameters: name, userFrench
-    private final String name;
+    private final String directory;
     private boolean useFrench;
 
     @DataBoundConstructor
-    public FileProcessingBuilder(String name) {
-        this.name = name;
+    public FileProcessingBuilder(String directory) {
+        this.directory = directory;
     }
 
     public String getName() {
-        return name;
+        return directory;
     }
 
     public boolean isUseFrench() {
@@ -44,15 +44,16 @@ public class FileProcessingBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
         //calling the HelloWorldAction and passing in the name. from "Extend the Plugin" docs:
-        //run.addAction(new HelloWorldAction(name));
+        run.addAction(new FileProcessingAction(directory));
 
-        run.addAction(new FileProcessingAction());
-        //calling the main function in the driver.java file
+        listener.getLogger().println("The directory selected is: " + directory);
 
-        //FileTypeDetection.FileTypeDetectionMain(null);
+        //calling the main function in the FileTypeDetection.java file and passing the directory path from build step
+        //FileTypeDetection.main(new String[]{directory});
+        //new FileTypeDetection(directory);
         try {
             //try instantiating a new object and then call the main function?
-            FileTypeDetection.main(new String[]{});
+            FileTypeDetection.main(new String[]{directory});
         } catch (Exception e) {
             listener.getLogger().println("Error running FileTypeDetection: " + e.getMessage());
         }
@@ -62,7 +63,6 @@ public class FileProcessingBuilder extends Builder implements SimpleBuildStep {
     @Symbol("greet")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
-
 
 
         @Override
