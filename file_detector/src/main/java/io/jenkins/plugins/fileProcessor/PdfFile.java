@@ -38,7 +38,7 @@ public class PdfFile {
         this.fileMinute = (pdd.getCreationDate()).get(Calendar.MINUTE);
         this.fileSecond = (pdd.getCreationDate()).get(Calendar.SECOND);
 
-
+        //Goes through each PDF file and skips all spaces to get appropriate word count
         int count = 0;
         PDFTextStripper stripper = new PDFTextStripper();
         stripper.setEndPage(20);
@@ -52,21 +52,17 @@ public class PdfFile {
         }
         this.wordCount = count;
 
-
-        //end of Laura stuff//
-
         doc.close();
 
     }
 
-    //add dateCreation Laura
+    //defining variables
     private int fileMonth;
     private int fileDay;
     private int fileYear;
     private int fileHour;
     private int fileMinute;
     private int fileSecond;
-    //end of Laura section
     private int wordCount;
     private GregorianCalendar lastModificationDate;
     private String creator;
@@ -88,7 +84,6 @@ public class PdfFile {
     }};
 
     //Get and set methods
-    //laura section//
     public int getFileMonth(){
         return this.fileMonth;
     }
