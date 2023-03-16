@@ -12,11 +12,20 @@ Document Data Validator is a Jenkins plugin that extracts metadata from PDF, Wor
 To use the Document Data Validator plugin in your Jenkins pipeline, add the following step to your `Jenkinsfile`:
 
 ```
-steps {
-  script {
-    validateDocuments(directory: 'C:\path\to\inputFolder\')
-  }
+pipeline {
+    agent any
+
+    stages {
+        stage('Validation') {
+            steps {
+                script {
+                    validateDocuments(directory: 'path/to/your/files', useFrench: true)
+                }
+            }
+        }
+    }
 }
+
 ```
 Replace 'C:\path\to\inputFolder\' with the path to the directory containing the documents you want to validate.
 make sure to include the backslash at the end
