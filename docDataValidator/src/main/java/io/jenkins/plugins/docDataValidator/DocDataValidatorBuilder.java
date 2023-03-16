@@ -27,7 +27,7 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
         this.directory = directory;
     }
 
-    public String getName() {
+    public String getDirectory() {
         return directory;
     }
 
