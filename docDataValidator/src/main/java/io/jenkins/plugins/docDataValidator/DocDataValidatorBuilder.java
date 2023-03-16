@@ -59,7 +59,7 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
 
     }
 
-    @Symbol("greet")
+    @Symbol("validateDocuments")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
