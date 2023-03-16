@@ -14,8 +14,7 @@ To use the Document Data Validator plugin in your Jenkins pipeline, add the foll
 ```
 steps {
   script {
-    def plugin = Jenkins.instance.getPlugin(com.example.DocumentDataValidator.class)
-    plugin.validateDocuments(directory: 'C:\path\to\inputFolder\')
+    validateDocuments(directory: 'C:\path\to\inputFolder\')
   }
 }
 ```
