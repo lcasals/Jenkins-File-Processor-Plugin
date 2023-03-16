@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+<div>Description: This is a jenkins plugin to extract data from document files. Currently supported files are: Word documents, PDFs, and .txt files</div>
+
+</j:jelly>

@@ -1,4 +1,4 @@
-package io.jenkins.plugins.fileProcessor;
+package io.jenkins.plugins.docDataValidator;
 
 import java.util.Date;
 import java.util.HashMap;

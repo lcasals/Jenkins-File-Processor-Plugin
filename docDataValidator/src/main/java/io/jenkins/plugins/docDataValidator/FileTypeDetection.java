@@ -1,8 +1,9 @@
-package io.jenkins.plugins.fileProcessor;
+package io.jenkins.plugins.docDataValidator;
 
 import java.io.IOException;
 import java.io.File;
 import java.util.*;
+import hudson.model.TaskListener;
 
 
 public class FileTypeDetection {
@@ -51,10 +52,10 @@ public class FileTypeDetection {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args, TaskListener listener) throws IOException {
         setDIRECTORY(args[0]);
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        System.out.println("\n\t Traversing files in directory: " + directory + "\n");
+        listener.getLogger().println("Working Directory = " + System.getProperty("user.dir"));
+        listener.getLogger().println("\n\t Traversing files in directory: " + directory + "\n");
 
         //Begins traversing file directory
         try {
@@ -63,7 +64,7 @@ public class FileTypeDetection {
 
                 updateTotalCount();
                 String fileName = f.toString();
-                System.out.println("File name: " + f.getName());
+                listener.getLogger().println("File name: " + f.getName());
 
                 //takes extension of a file
                 int index = fileName.lastIndexOf('.');
@@ -96,43 +97,43 @@ public class FileTypeDetection {
             }
 
             //printing content of each array
-            System.out.println(
+            listener.getLogger().println(
                     "---------------------------------------------\n" +
                             "\t\tfiles in docx\n" +
                             "---------------------------------------------");
 
             for (String s : docxNames) {
-                System.out.println("|\t"+ s + "\t\t\t|\n");
+                listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
             }
-            System.out.println(
+            listener.getLogger().println(
                     "---------------------------------------------\n" +
                             "\t\tfiles in pptx\n" +
                             "---------------------------------------------");
 
             for (String s : pptxNames) {
-                System.out.println("|\t"+ s + "\t\t\t|\n");
+                listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
             }
-            System.out.println(
+            listener.getLogger().println(
                     "---------------------------------------------\n" +
                             "\t\tfiles in pdf\n" +
                             "---------------------------------------------");
 
             for (String s : pdfNames) {
-                System.out.println("|\t"+ s + "\t\t\t|\n");
+                listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
             }
-            System.out.println(
+            listener.getLogger().println(
                     "---------------------------------------------\n" +
                             "\t\tOther files\n" +
                             "---------------------------------------------");
 
             for (String s : unknownNames) {
-                System.out.println("|\t"+ s + "\t\t\t|\n");
+                listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
             }
         }catch(NullPointerException e){
-            System.out.println("File not found: " + e);
+            listener.getLogger().println("File not found: " + e);
         }
 
-        driver.main(pdfNames, getDirectory());
+        driver.main(pdfNames, getDirectory(), listener);
 
     }
 

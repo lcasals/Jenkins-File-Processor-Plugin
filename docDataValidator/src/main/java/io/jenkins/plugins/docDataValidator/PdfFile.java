@@ -1,4 +1,4 @@
-package io.jenkins.plugins.fileProcessor;
+package io.jenkins.plugins.docDataValidator;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;

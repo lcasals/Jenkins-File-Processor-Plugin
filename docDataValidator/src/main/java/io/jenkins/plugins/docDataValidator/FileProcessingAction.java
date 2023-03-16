@@ -1,6 +1,6 @@
 /*HelloWorld Action  */
 
-package io.jenkins.plugins.fileProcessor;
+package io.jenkins.plugins.docDataValidator;
 import hudson.model.Run;
 import jenkins.model.RunAction2;
 public class FileProcessingAction implements RunAction2 {

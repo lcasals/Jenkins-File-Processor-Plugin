@@ -1,4 +1,4 @@
-package io.jenkins.plugins.fileProcessor;
+package io.jenkins.plugins.docDataValidator;
 
 import hudson.Launcher;
 import hudson.EnvVars;
@@ -15,6 +15,8 @@ import java.io.IOException;
 import jenkins.tasks.SimpleBuildStep;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundSetter;
+
+import hudson.model.TaskListener;
 
 public class FileProcessingBuilder extends Builder implements SimpleBuildStep {
 
@@ -53,7 +55,7 @@ public class FileProcessingBuilder extends Builder implements SimpleBuildStep {
         //new FileTypeDetection(directory);
         try {
             //try instantiating a new object and then call the main function?
-            FileTypeDetection.main(new String[]{directory});
+            FileTypeDetection.main(new String[]{directory}, listener);
         } catch (Exception e) {
             listener.getLogger().println("Error running FileTypeDetection: " + e.getMessage());
         }
