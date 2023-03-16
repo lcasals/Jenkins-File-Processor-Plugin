@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
-<div>Description: This is a jenkins plugin to extract data from document files. Currently supported files are: Word documents, PDFs, and .txt files</div>
+<div>Description: Document Data Validator is a Jenkins plugin that extracts metadata from PDF, Word, and text files, validates the content,
+    and saves metadata into a JSON file. It detects and lists files in a directory, prints out file information,
+    and reports errors such as spelling mistakes and broken links to the console. The plugin is designed to fail the Jenkins pipeline if any errors are detected
+</div>
 
 </j:jelly>

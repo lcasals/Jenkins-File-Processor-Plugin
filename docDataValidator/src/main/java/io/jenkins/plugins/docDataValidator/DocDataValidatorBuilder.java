@@ -16,16 +16,14 @@ import jenkins.tasks.SimpleBuildStep;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundSetter;
 
-import hudson.model.TaskListener;
-
-public class FileProcessingBuilder extends Builder implements SimpleBuildStep {
+public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep {
 
     //Getters and setters for Parameters: name, userFrench
     private final String directory;
     private boolean useFrench;
 
     @DataBoundConstructor
-    public FileProcessingBuilder(String directory) {
+    public DocDataValidatorBuilder(String directory) {
         this.directory = directory;
     }
 
@@ -46,7 +44,7 @@ public class FileProcessingBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
         //calling the HelloWorldAction and passing in the name. from "Extend the Plugin" docs:
-        run.addAction(new FileProcessingAction(directory));
+        run.addAction(new DocDataValidationAction(directory));
 
         listener.getLogger().println("The directory selected is: " + directory);
 
@@ -74,7 +72,7 @@ public class FileProcessingBuilder extends Builder implements SimpleBuildStep {
         //display name for the Build step. will show up when adding plugin as a build step in the dashboard
         @Override
         public String getDisplayName() {
-            return "File Processing Plugin";
+            return "Document Data Validator";
             //return Messages.HelloWorldBuilder_DescriptorImpl_DisplayName();
         }
 

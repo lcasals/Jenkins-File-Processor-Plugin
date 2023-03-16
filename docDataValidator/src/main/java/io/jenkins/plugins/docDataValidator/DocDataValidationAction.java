@@ -3,7 +3,7 @@
 package io.jenkins.plugins.docDataValidator;
 import hudson.model.Run;
 import jenkins.model.RunAction2;
-public class FileProcessingAction implements RunAction2 {
+public class DocDataValidationAction implements RunAction2 {
     private transient Run run;
     @Override
     public void onAttached(Run<?, ?> run) {
@@ -42,7 +42,7 @@ public class FileProcessingAction implements RunAction2 {
 
     private String directory;
     //constructor
-    public FileProcessingAction(String directory) {
+    public DocDataValidationAction(String directory) {
         this.directory = directory;
     }
     //getter for the name
