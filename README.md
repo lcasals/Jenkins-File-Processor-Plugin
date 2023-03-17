@@ -1,5 +1,5 @@
 # Jenkins-Document-Data-Validator
-Document Data Validator is a Jenkins plugin that extracts metadata from PDF, Word, and text files, validates the content, and saves metadata into a JSON file. It detects and lists files in a directory, prints out file information, and reports errors such as spelling mistakes and broken links to the console. The plugin is designed to fail the Jenkins pipeline if any errors are detected
+Document Data Validator is a Jenkins plugin that extracts metadata from PDF, Word, and text files, validates the content, and saves metadata into a JSON file. It detects and lists files in a directory, prints out file information, and (will eventually) report errors such as spelling mistakes and broken links to the console. The plugin is designed to fail the Jenkins pipeline if any errors are detected
 
 ## Features:  
 - Extracts metadata from PDF, Word, and text files
