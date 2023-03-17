@@ -19,7 +19,7 @@ pipeline {
         stage('Validation') {
             steps {
                 script {
-                    validateDocuments(directory: 'path/to/your/files', useFrench: true)
+                    validateDocuments(directory: 'path/to/your/files')
                 }
             }
         }
