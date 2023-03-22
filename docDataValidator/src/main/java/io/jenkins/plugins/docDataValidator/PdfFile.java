@@ -1,10 +1,12 @@
 package io.jenkins.plugins.docDataValidator;
 
+import com.google.gson.Gson;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -15,42 +17,35 @@ public class PdfFile {
 
     private File file;
     private PDDocument doc;
-    //private PDDocumentInformation pdd;
+    private PDDocumentInformation pdd;
 
     public PdfFile(String fileName, String directory) throws IOException {
 
 
         this.file = new File(directory+fileName);
         this.doc = PDDocument.load(file);
-        PDDocumentInformation pdd = this.doc.getDocumentInformation();
+        this.pdd = this.doc.getDocumentInformation();
         this.fileName = fileName;
         this.author = pdd.getAuthor();
         this.title = pdd.getTitle();
         this.subject = pdd.getSubject();
+        this.creator = pdd.getCreator();
         this.pageCount = doc.getNumberOfPages();
         this.fileSize = file.length();
+        setWordCount();
 
         //Laura stuff//
-        this.fileMonth = (pdd.getCreationDate()).get(Calendar.MONTH);
-        this.fileDay = (pdd.getCreationDate()).get(Calendar.DATE);
-        this.fileYear = (pdd.getCreationDate()).get(Calendar.YEAR);
-        this.fileHour = (pdd.getCreationDate()).get(Calendar.HOUR);
-        this.fileMinute = (pdd.getCreationDate()).get(Calendar.MINUTE);
-        this.fileSecond = (pdd.getCreationDate()).get(Calendar.SECOND);
+        this.fileMonth = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.MONTH);
+        this.fileDay = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.DATE);
+        this.fileYear = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.YEAR);
+        this.fileHour = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.HOUR);
+        this.fileMinute = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.MINUTE);
+        this.fileSecond = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.SECOND);
 
         //Goes through each PDF file and skips all spaces to get appropriate word count
-        int count = 0;
-        PDFTextStripper stripper = new PDFTextStripper();
-        stripper.setEndPage(20);
-        String text = stripper.getText(doc);
-        String[] texts = text.split(" ");
-        for (String txt : texts) {
-            if(txt.trim().length() != 0)
-            {
-                count = count + 1;
-            }
-        }
-        this.wordCount = count;
+        this.creationDate = getFileMonth()+"/"+getFileDay()+
+                "/"+getFileYear()+" " +getFileHour()+":"+getFileMinute()+":"
+                +getFileSecond();
 
         doc.close();
 
@@ -64,6 +59,7 @@ public class PdfFile {
     private int fileMinute;
     private int fileSecond;
     private int wordCount;
+    private String allData;
     private GregorianCalendar lastModificationDate;
     private String creator;
     private String subject;
@@ -71,7 +67,7 @@ public class PdfFile {
     private int pageCount;
     private String author;
     private long fileSize;
-    private GregorianCalendar creationDate;
+    private String creationDate;
     private String fileName;
     //Stores each links response code
     private HashMap<String, Integer> linksInFile = new HashMap<String, Integer>();
@@ -84,29 +80,21 @@ public class PdfFile {
     }};
 
     //Get and set methods
-    public int getFileMonth(){
-        return this.fileMonth;
-    }
-    public int getFileDay(){
-        return this.fileDay;
-    }
-    public int getFileYear(){
-        return this.fileYear;
-    }
-    public int getFileHour(){
-        return this.fileHour;
-    }
-    public int getFileMinute(){
-        return this.fileMinute;
-    }
-    public int getFileSecond(){
-        return this.fileSecond;
-    }
-    //end Laura section//
-    public void setWordCount(Integer count){
+    public void setWordCount() throws IOException {
+        int count = 0;
+        PDFTextStripper stripper = new PDFTextStripper();
+        stripper.setEndPage(20);
+        String text = stripper.getText(this.doc);
+        String[] texts = text.split(" ");
+        for (String txt : texts) {
+            if (txt.trim().length() != 0)
+            {
+                count = count + 1;
+            }
+        }
+        //end Laura section//
         this.wordCount = count;
     }
-
     public Integer getWordCount(){
         return this.wordCount;
     }
@@ -128,7 +116,7 @@ public class PdfFile {
     public long getFileSize(){
         return this.fileSize;
     }
-    public GregorianCalendar getDateOfCreation(){
+    public String getDateOfCreation(){
         return this.creationDate;
     }
     //returns whether there is a flag in emails, links, or grammar.
@@ -157,7 +145,41 @@ public class PdfFile {
         return this.linksInFile.get(link);
     }
 
-    public void OutPutJson(){
+    public void createJSON(){
+        this.allData = "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
+                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
 
+        Gson gson = new Gson();
+
+        // Convert the input string to a JSON object
+        Object jsonObject = gson.fromJson(this.allData, Object.class);
+        String outputFilePath = "./src/FileOutput/";
+
+        // Write the JSON object to a file
+        try (FileWriter fileWriter = new FileWriter(outputFilePath+getFileName()+".json")) {
+            gson.toJson(jsonObject, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public int getFileMonth(){
+        return this.fileMonth;
+    }
+    public int getFileDay(){
+        return this.fileDay;
+    }
+    public int getFileYear(){
+        return this.fileYear;
+    }
+    public int getFileHour(){
+        return this.fileHour;
+    }
+    public int getFileMinute(){
+        return this.fileMinute;
+    }
+    public int getFileSecond(){
+        return this.fileSecond;
+    }
+
 }

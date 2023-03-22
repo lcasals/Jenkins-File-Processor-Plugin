@@ -1,10 +1,12 @@
 package io.jenkins.plugins.docDataValidator;
 
-import java.io.IOException;
-import java.io.File;
-import java.util.*;
+import com.ibm.icu.impl.InvalidFormatException;
 import hudson.model.TaskListener;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileTypeDetection {
     //Path to input
@@ -52,7 +54,7 @@ public class FileTypeDetection {
     }
 
 
-    public static void main(String[] args, TaskListener listener) throws IOException {
+    public static void main(String[] args, TaskListener listener) throws IOException, InvalidFormatException {
         setDIRECTORY(args[0]);
         listener.getLogger().println("Working Directory = " + System.getProperty("user.dir"));
         listener.getLogger().println("\n\t Traversing files in directory: " + directory + "\n");
@@ -133,7 +135,7 @@ public class FileTypeDetection {
             listener.getLogger().println("File not found: " + e);
         }
 
-        driver.main(pdfNames, getDirectory(), listener);
+        driver.main(pdfNames, listener, docxNames, pptxNames, getDirectory());
 
     }
 
