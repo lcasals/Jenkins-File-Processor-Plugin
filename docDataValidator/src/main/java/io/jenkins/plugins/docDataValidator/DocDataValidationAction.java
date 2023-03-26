@@ -41,9 +41,11 @@ public class DocDataValidationAction implements RunAction2 {
 
 
     private String directory;
+    private String outputDirectory;
     //constructor
-    public DocDataValidationAction(String directory) {
+    public DocDataValidationAction(String directory, String outputDirectory) {
         this.directory = directory;
+        this.outputDirectory = outputDirectory;
     }
     //getter for the name
     public String getName() {
