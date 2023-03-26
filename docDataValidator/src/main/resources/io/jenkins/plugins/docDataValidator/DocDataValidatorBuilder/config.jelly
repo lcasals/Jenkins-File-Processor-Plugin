@@ -1,17 +1,20 @@
-
-<?jelly escape-by-default='true'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-    <f:entry title="${%Directory Path}" field="directory">
+    <f:entry title="Directory Path" field="directory">
         <f:textbox />
     </f:entry>
-<!--This portion allows you to implement a checkbox-->
-<!--    <f:advanced>-->
-<!--        <f:entry title="${%French}" field="useFrench"-->
-<!--                 description="${%FrenchDescr}">-->
-<!--            <f:checkbox />-->
-<!--        </f:entry>-->
-<!--    </f:advanced>-->
+    <f:entry title="Output Directory Path (optional)" field="outputDirectory">
+        <f:textbox />
+    </f:entry>
+    <j:set var="outputDirectory" value="${param.outputDirectory}" />
+    <j:if test="${outputDirectory == null || outputDirectory == ''}">
+        <j:set var="outputDirectory" value="${directory}" />
+    </j:if>
+    <j:set var="workspace" value="${it.getWorkspace().getRemote()}" />
+    <j:set var="jsonOutputDir" value="${workspace}/jsonOutput" />
+    <h2>Default Output Directory: ${jsonOutputDir}</h2>
 </j:jelly>
+
 
 
 
