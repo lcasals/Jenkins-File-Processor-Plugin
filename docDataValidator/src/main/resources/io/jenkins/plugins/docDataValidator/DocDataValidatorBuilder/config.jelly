@@ -1,21 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
     <f:entry title="Directory Path" field="directory">
         <f:textbox />
     </f:entry>
+
     <f:entry title="Output Directory Path (optional)" field="outputDirectory">
         <f:textbox />
     </f:entry>
-    <j:set var="outputDirectory" value="${param.outputDirectory}" />
-    <j:if test="${outputDirectory == null || outputDirectory == ''}">
-        <j:set var="outputDirectory" value="${directory}" />
-    </j:if>
+
+    <!-- Get the workspace path and store it in the 'workspace' variable -->
     <j:set var="workspace" value="${it.getWorkspace().getRemote()}" />
+    <!-- Construct the default output directory path and store it in the 'jsonOutputDir' variable -->
     <j:set var="jsonOutputDir" value="${workspace}/jsonOutput" />
-    <h2>Default Output Directory: ${jsonOutputDir}</h2>
+
+    <h3>Default Output Directory: ${jsonOutputDir}</h3>
+
 </j:jelly>
-
-
 
 
 

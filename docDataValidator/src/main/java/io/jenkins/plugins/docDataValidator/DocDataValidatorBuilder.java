@@ -17,9 +17,9 @@ import java.io.IOException;
 
 public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep {
 
-    //Getters and setters for Parameters: name, userFrench
+    //Getters and setters for Parameters: name
     private final String directory;
-    private final String outputDirectory;
+    private String outputDirectory;
 
 
     @DataBoundConstructor
@@ -37,6 +37,10 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
 
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
+        // Set the default value for outputDirectory if not provided
+        if (outputDirectory == null || outputDirectory.isEmpty()) {
+            outputDirectory = workspace.getRemote() + "/jsonOutput";
+        }
         //calling the HelloWorldAction and passing in the name. from "Extend the Plugin" docs:
         run.addAction(new DocDataValidationAction(directory, outputDirectory));
 

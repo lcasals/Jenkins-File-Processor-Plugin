@@ -51,6 +51,10 @@ public class DocDataValidationAction implements RunAction2 {
     public String getName() {
         return directory;
     }
+
+    public String getOutputDirectory() {
+        return outputDirectory;
+    }
     
 
 
