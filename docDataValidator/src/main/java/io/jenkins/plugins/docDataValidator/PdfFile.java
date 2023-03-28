@@ -18,11 +18,11 @@ public class PdfFile {
     private File file;
     private PDDocument doc;
     private PDDocumentInformation pdd;
+    private String outputDirectory;
 
-    public PdfFile(String fileName, String directory) throws IOException {
-
-
-        this.file = new File(directory+fileName);
+    public PdfFile(String fileName, String directory, String outputDirectory) throws IOException {
+        this.file = new File(directory, fileName);
+        this.outputDirectory = outputDirectory;
         this.doc = PDDocument.load(file);
         this.pdd = this.doc.getDocumentInformation();
         this.fileName = fileName;
@@ -153,10 +153,18 @@ public class PdfFile {
 
         // Convert the input string to a JSON object
         Object jsonObject = gson.fromJson(this.allData, Object.class);
-        String outputFilePath = "./src/FileOutput/";
+        //String outputFilePath = "./src/FileOutput/";
+        String outputFilePath = outputDirectory;
+        System.out.println("THIS IS THE OUTPUT FILE PATH FOR THE PDF FILES' JSON: " + outputFilePath);
 
+        //Check if Folder exists, if not: create it
+        //using built in File Java object to use the mkdirs() and exists() methods
+        File outputDir = new File(outputDirectory);
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
         // Write the JSON object to a file
-        try (FileWriter fileWriter = new FileWriter(outputFilePath+getFileName()+".json")) {
+        try (FileWriter fileWriter = new FileWriter(outputFilePath + File.separator + getFileName() + ".json")) {
             gson.toJson(jsonObject, fileWriter);
         } catch (IOException e) {
             e.printStackTrace();

@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class driver {
 
     //change to accept an array of arrays and create a for loop to enter each to make it.
-    public static void main(ArrayList<String> pdfArray, TaskListener listener, ArrayList<String> docxArray, ArrayList<String> pptxArray, String dir) throws IOException, InvalidFormatException {
-
+    public static void main(ArrayList<String> pdfArray, TaskListener listener, ArrayList<String> docxArray, ArrayList<String> pptxArray, String dir, String outputDir) throws IOException, InvalidFormatException {
+        //main(pdfArray, listener, docxArray, pptxArray, String dir, String outputDir)
         System.out.print("Running second program\n");
         FileObjectCreation createobj = new FileObjectCreation();
 
         createobj.createDocxObjects(docxArray, dir);
-        createobj.createPdfObjects(pdfArray, dir);
+        createobj.createPdfObjects(pdfArray, dir, outputDir);
         createobj.createPptxObjects(pptxArray,dir);
          listener.getLogger().println("\n\n-------------\n\nword documents\n\n-------------");
         for(DocxFile docs: createobj.getListOfDocxObjects()){

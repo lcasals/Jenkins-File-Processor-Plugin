@@ -54,7 +54,7 @@ public class FileTypeDetection {
     }
 
 
-    public static void main(String[] args, TaskListener listener) throws IOException, InvalidFormatException {
+    public static void main(String[] args, String outputDirectory, TaskListener listener) throws IOException, InvalidFormatException {
         setDIRECTORY(args[0]);
         listener.getLogger().println("Working Directory = " + System.getProperty("user.dir"));
         listener.getLogger().println("\n\t Traversing files in directory: " + directory + "\n");
@@ -135,7 +135,7 @@ public class FileTypeDetection {
             listener.getLogger().println("File not found: " + e);
         }
 
-        driver.main(pdfNames, listener, docxNames, pptxNames, getDirectory());
+        driver.main(pdfNames, listener, docxNames, pptxNames, getDirectory(), outputDirectory);
 
     }
 

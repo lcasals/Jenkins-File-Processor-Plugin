@@ -9,6 +9,7 @@ public class FileObjectCreation {
 
     //private static String DIRECTORY = "/Users/anacasals/IdeaProjects/Jenkins-File-Processor-Plugin/file_detector/FileInput/" ;
     private static String directory;
+    private String outputDirectory;
     private ArrayList<DocxFile> listOfDocxObjects = new ArrayList<>();
     private ArrayList<PptxFile> listOfPptxObjects = new ArrayList<>();
     private ArrayList<PdfFile> listOfPdfObjects = new ArrayList<>();
@@ -41,10 +42,11 @@ public class FileObjectCreation {
             addPptxObject(new PptxFile(file,this.directory));
         }
     }
-    public void createPdfObjects(ArrayList<String> pdf, String dir) throws IOException {
+    public void createPdfObjects(ArrayList<String> pdf, String dir, String outputDir) throws IOException {
         directory = dir;
+        outputDirectory = outputDir;
         for(String file:pdf) {
-            addPdfObject(new PdfFile(file, this.directory));
+            addPdfObject(new PdfFile(file, this.directory, this.outputDirectory));
         }
     }
 

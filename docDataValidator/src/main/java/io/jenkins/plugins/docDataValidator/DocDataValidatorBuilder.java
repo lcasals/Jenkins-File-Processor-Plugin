@@ -52,7 +52,7 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
         //new FileTypeDetection(directory);
         try {
             //try instantiating a new object and then call the main function?
-            FileTypeDetection.main(new String[]{directory}, listener);
+            FileTypeDetection.main(new String[]{directory}, outputDirectory, listener);
         } catch (Exception e) {
             listener.getLogger().println("Error running FileTypeDetection: " + e.getMessage());
         }
