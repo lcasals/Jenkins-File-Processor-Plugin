@@ -20,26 +20,26 @@ public class FileObjectCreation {
     }
     public ArrayList<PdfFile> getListOfPdfObjects(){ return this.listOfPdfObjects;}
     public ArrayList<PptxFile> getListOfPptxObjects(){ return this.listOfPptxObjects;}
-    public void addDocxObject(DocxFile file){
-        this.listOfDocxObjects.add(file);
-    }
+    public void addDocxObject(DocxFile file){ this.listOfDocxObjects.add(file);}
     public void addPdfObject(PdfFile file){ this.listOfPdfObjects.add(file);};
     public void addPptxObject(PptxFile file){ this.listOfPptxObjects.add(file);};
 
-    public void createDocxObjects(ArrayList<String> docx, String dir) throws IOException, InvalidFormatException {
+    public void createDocxObjects(ArrayList<String> docx, String dir, String outputDir) throws IOException, InvalidFormatException {
         directory = dir;
+        outputDirectory = outputDir;
         for(String file: docx){
             try {
-                addDocxObject(new DocxFile(file,this.directory));
+                addDocxObject(new DocxFile(file,this.directory, this.outputDirectory));
             } catch (org.apache.poi.openxml4j.exceptions.InvalidFormatException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-    public void createPptxObjects(ArrayList<String> pptx, String dir) throws IOException, InvalidFormatException {
+    public void createPptxObjects(ArrayList<String> pptx, String dir, String outputDir) throws IOException, InvalidFormatException {
         directory = dir;
+        outputDirectory = outputDir;
         for(String file: pptx){
-            addPptxObject(new PptxFile(file,this.directory));
+            addPptxObject(new PptxFile(file,this.directory, this.outputDirectory));
         }
     }
     public void createPdfObjects(ArrayList<String> pdf, String dir, String outputDir) throws IOException {

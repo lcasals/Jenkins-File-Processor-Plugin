@@ -13,11 +13,14 @@ import java.io.IOException;
 
 public class PptxFile {
     File file;
+    private String outputDirectory;
+    private String directory;
 
-    public PptxFile(String nameOfFile, String directory) throws IOException {
+    public PptxFile(String nameOfFile, String directory, String outputDirectory) throws IOException {
         this.file = new File(directory + nameOfFile);
         this.Directory = directory;
         this.fileName = nameOfFile;
+        this.outputDirectory = outputDirectory;
 
         this.pptx = new XMLSlideShow(new FileInputStream(Directory + fileName));
 
@@ -130,10 +133,16 @@ public class PptxFile {
 
         // Convert the input string to a JSON object
         Object jsonObject = gson.fromJson(this.allData, Object.class);
-        String outputFilePath = "./src/FileOutput/";
 
+        String outputFilePath = outputDirectory;
+
+        //Check if Folder exists, if not: create it
+        File outputDir = new File(outputDirectory);
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
         // Write the JSON object to a file
-        try (FileWriter fileWriter = new FileWriter(outputFilePath + getFileName() + ".json")) {
+        try (FileWriter fileWriter = new FileWriter(outputFilePath + File.separator + getFileName() + ".json")) {
             gson.toJson(jsonObject, fileWriter);
         } catch (IOException e) {
             e.printStackTrace();

@@ -16,6 +16,7 @@ public class DocxFile {
     File file;
     private String fileName;
     private String Directory;
+    private String outputDirectory;
     private String allData;
     private int wordCount;
     private int pageCount;
@@ -25,9 +26,10 @@ public class DocxFile {
 
 
     XWPFDocument document;
-    public DocxFile(String name, String Directory) throws IOException, InvalidFormatException {
+    public DocxFile(String name, String Directory, String outputDirectory) throws IOException, InvalidFormatException {
         this.fileName = name;
         this.Directory = Directory;
+        this.outputDirectory = outputDirectory;
         this.file = new File(Directory+name);
         this.document = new XWPFDocument(new FileInputStream(Directory+name));
         this.setWordCount();
@@ -131,15 +133,20 @@ public class DocxFile {
 
         // Convert the input string to a JSON object
         Object jsonObject = gson.fromJson(this.allData, Object.class);
-        String outputFilePath = "./src/FileOutput/";
 
+        String outputFilePath = outputDirectory;
+
+        //Check if Folder exists, if not: create it
+        File outputDir = new File(outputDirectory);
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
         // Write the JSON object to a file
-        try (FileWriter fileWriter = new FileWriter(outputFilePath+getFileName()+".json")) {
+        try (FileWriter fileWriter = new FileWriter(outputFilePath + File.separator + getFileName() + ".json")) {
             gson.toJson(jsonObject, fileWriter);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 

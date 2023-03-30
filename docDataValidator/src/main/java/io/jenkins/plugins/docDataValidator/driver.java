@@ -14,9 +14,9 @@ public class driver {
         System.out.print("Running second program\n");
         FileObjectCreation createobj = new FileObjectCreation();
 
-        createobj.createDocxObjects(docxArray, dir);
+        createobj.createDocxObjects(docxArray, dir, outputDir);
         createobj.createPdfObjects(pdfArray, dir, outputDir);
-        createobj.createPptxObjects(pptxArray,dir);
+        createobj.createPptxObjects(pptxArray,dir, outputDir);
          listener.getLogger().println("\n\n-------------\n\nword documents\n\n-------------");
         for(DocxFile docs: createobj.getListOfDocxObjects()){
              listener.getLogger().println("name of file: "+docs.getFileName()+"\n");
