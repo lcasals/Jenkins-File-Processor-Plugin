@@ -53,7 +53,24 @@ public class FileTypeDetection {
         return fileArrayOfArrays;
     }
 
+    public static void setPDFNames() {
 
+    }
+    public static void setDOCXNames(){
+
+    }
+    public static void setPPTXNames(){
+
+    }
+    public ArrayList<String> getPDFNames(){
+        return this.pdfNames;
+    }
+    public ArrayList<String> getDOCXNames(){
+        return this.docxNames;
+    }
+    public ArrayList<String> getPPTXNames(){
+        return this.pptxNames;
+    }
     public static void main(String[] args, String outputDirectory, TaskListener listener) throws IOException, InvalidFormatException {
         setDIRECTORY(args[0]);
         listener.getLogger().println("Working Directory = " + System.getProperty("user.dir"));
@@ -61,7 +78,6 @@ public class FileTypeDetection {
 
         //Begins traversing file directory
         try {
-
             for (File f : new File(directory).listFiles()) {
 
                 updateTotalCount();
@@ -83,60 +99,57 @@ public class FileTypeDetection {
 
                     }
                     //storing doc names into appropriate data structures
-                    if(extension.equals("docx")){
+                    if (extension.equals("docx")) {
                         docxNames.add(f.getName());
-                    }
-                    else if(extension.equals("pptx")){
+                    } else if (extension.equals("pptx")) {
                         pptxNames.add(f.getName());
-                    }
-                    else if(extension.equals("pdf")){
+                    } else if (extension.equals("pdf")) {
                         pdfNames.add(f.getName());
-                    }
-                    else{
+                    } else {
                         unknownNames.add(f.getName());
                     }
                 }
             }
-
-            //printing content of each array
-            listener.getLogger().println(
-                    "---------------------------------------------\n" +
-                            "\t\tfiles in docx\n" +
-                            "---------------------------------------------");
-
-            for (String s : docxNames) {
-                listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
-            }
-            listener.getLogger().println(
-                    "---------------------------------------------\n" +
-                            "\t\tfiles in pptx\n" +
-                            "---------------------------------------------");
-
-            for (String s : pptxNames) {
-                listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
-            }
-            listener.getLogger().println(
-                    "---------------------------------------------\n" +
-                            "\t\tfiles in pdf\n" +
-                            "---------------------------------------------");
-
-            for (String s : pdfNames) {
-                listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
-            }
-            listener.getLogger().println(
-                    "---------------------------------------------\n" +
-                            "\t\tOther files\n" +
-                            "---------------------------------------------");
-
-            for (String s : unknownNames) {
-                listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
-            }
-        }catch(NullPointerException e){
-            listener.getLogger().println("File not found: " + e);
+        } catch (NullPointerException e) {
+            System.out.println("File not found: " + e);
         }
-
-        driver.main(pdfNames, listener, docxNames, pptxNames, getDirectory(), outputDirectory);
-
     }
+
+    public void printFileNames(TaskListener listener) {
+        //printing content of each array
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tfiles in docx\n" +
+                        "---------------------------------------------");
+
+        for (String s : docxNames) {
+            listener.getLogger().println("|\t" + s + "\t\t\t|\n");
+        }
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tfiles in pptx\n" +
+                        "---------------------------------------------");
+
+        for (String s : pptxNames) {
+            listener.getLogger().println("|\t" + s + "\t\t\t|\n");
+        }
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tfiles in pdf\n" +
+                        "---------------------------------------------");
+
+        for (String s : pdfNames) {
+            listener.getLogger().println("|\t" + s + "\t\t\t|\n");
+        }
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tOther files\n" +
+                        "---------------------------------------------");
+
+        for (String s : unknownNames) {
+            listener.getLogger().println("|\t" + s + "\t\t\t|\n");
+        }
+    }
+
 
 }
