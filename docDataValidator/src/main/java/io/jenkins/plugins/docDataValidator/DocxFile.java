@@ -14,16 +14,6 @@ import java.util.HashMap;
 
 public class DocxFile {
     File file;
-    private String fileName;
-    private String Directory;
-    private String outputDirectory;
-    private String allData;
-    private int wordCount;
-    private int pageCount;
-    private String author;
-    private long fileSize;
-    private Date dateOfCreation;
-
 
     XWPFDocument document;
     public DocxFile(String name, String Directory, String outputDirectory) throws IOException, InvalidFormatException {
@@ -38,6 +28,16 @@ public class DocxFile {
         this.setDateOfCreation();
         this.setFileSize();
     }
+    private String fileName;
+    private String Directory;
+    private String outputDirectory;
+    private String allData;
+    private int wordCount;
+    private int pageCount;
+    private String author;
+    private long fileSize;
+    private Date dateOfCreation;
+
     //Stores each links response code
     private HashMap<String, Integer> linksInFile = new HashMap<String, Integer>();
     //Stores emails and if they're valid

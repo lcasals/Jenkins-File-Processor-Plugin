@@ -71,8 +71,7 @@ public class FileTypeDetection {
     public ArrayList<String> getPPTXNames(){
         return this.pptxNames;
     }
-    public static void main(String[] args, String outputDirectory, TaskListener listener) throws IOException, InvalidFormatException {
-        setDIRECTORY(args[0]);
+    public void setFileNames(TaskListener listener) {
         listener.getLogger().println("Working Directory = " + System.getProperty("user.dir"));
         listener.getLogger().println("\n\t Traversing files in directory: " + directory + "\n");
 

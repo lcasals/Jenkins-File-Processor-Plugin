@@ -9,16 +9,21 @@ import java.util.ArrayList;
 public class driver {
 
     //change to accept an array of arrays and create a for loop to enter each to make it.
-    public static void main(ArrayList<String> pdfArray, TaskListener listener, ArrayList<String> docxArray, ArrayList<String> pptxArray, String dir, String outputDir) throws IOException, InvalidFormatException {
+    public static void main(String inputDirectory, String outputDirectory, TaskListener listener) throws IOException, InvalidFormatException {
         //main(pdfArray, listener, docxArray, pptxArray, String dir, String outputDir)
         System.out.print("Running second program\n");
-        FileObjectCreation createobj = new FileObjectCreation();
 
-        createobj.createDocxObjects(docxArray, dir, outputDir);
-        createobj.createPdfObjects(pdfArray, dir, outputDir);
-        createobj.createPptxObjects(pptxArray,dir, outputDir);
-         listener.getLogger().println("\n\n-------------\n\nword documents\n\n-------------");
-        for(DocxFile docs: createobj.getListOfDocxObjects()){
+        FileTypeDetection FilesForClassOne = new FileTypeDetection(inputDirectory);
+        FilesForClassOne.setFileNames(listener);
+        FileObjectCreation createObj = new FileObjectCreation();
+
+        createObj.createDocxObjects(FilesForClassOne.getDOCXNames(), inputDirectory,outputDirectory);
+        createObj.createPdfObjects(FilesForClassOne.getPDFNames(), inputDirectory,outputDirectory);
+        createObj.createPptxObjects(FilesForClassOne.getPPTXNames(),inputDirectory,outputDirectory);
+
+
+        listener.getLogger().println("\n\n-------------\n\nword documents\n\n-------------");
+        for(DocxFile docs: createObj.getListOfDocxObjects()){
              listener.getLogger().println("name of file: "+docs.getFileName()+"\n");
              listener.getLogger().println("name of author: "+docs.getAuthor()+"\n");
              listener.getLogger().println("Word count: "+docs.getWordCount()+"\n");
@@ -30,7 +35,7 @@ public class driver {
             docs.createJSON();
         }
          listener.getLogger().println("\n\nPrinting pdf file data \n\n-----------------");
-        for(PdfFile pdf: createobj.getListOfPdfObjects()){
+        for(PdfFile pdf: createObj.getListOfPdfObjects()){
 
 
              listener.getLogger().println("name of file: " + pdf.getFileName()+"\n");
@@ -45,7 +50,7 @@ public class driver {
             pdf.createJSON();
         }
          listener.getLogger().println("\n\nPowerpoint files \n\n---------------");
-        for(PptxFile pptx: createobj.getListOfPptxObjects()){
+        for(PptxFile pptx: createObj.getListOfPptxObjects()){
              listener.getLogger().println("name of file: "+pptx.getFileName()+"\n");
              listener.getLogger().println("name of author: "+ pptx.getAuthor()+"\n");
              listener.getLogger().println("Word count: "+ pptx.getWordCount()+"\n");
