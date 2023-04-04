@@ -19,7 +19,7 @@ pipeline {
         stage('Validation') {
             steps {
                 script {
-                    validateDocuments(directory: 'C:\path\to\inputFolder\')
+                    validateDocuments(directory: 'C:\path\to\inputFolder\', outputDirectory: 'C:\path\to\output')
                 }
             }
         }
