@@ -55,9 +55,6 @@ public class DocDataValidationAction implements RunAction2 {
     public String getOutputDirectory() {
         return outputDirectory;
     }
-    
-
-
 
 
 }

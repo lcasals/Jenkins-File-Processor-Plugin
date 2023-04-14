@@ -3,14 +3,20 @@ package io.jenkins.plugins.docDataValidator;
 import com.google.gson.Gson;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.interactive.action.PDAction;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionURI;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationLink;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
 
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.*;
 
 public class PdfFile {
 
@@ -47,6 +53,10 @@ public class PdfFile {
                 "/"+getFileYear()+" " +getFileHour()+":"+getFileMinute()+":"
                 +getFileSecond();
 
+        findUrl();
+
+        System.out.println("The files found are in " + fileName + " are: "+ getLocatedURLs());
+
         doc.close();
 
     }
@@ -69,6 +79,7 @@ public class PdfFile {
     private long fileSize;
     private String creationDate;
     private String fileName;
+    private int pdfPageNum;
     //Stores each links response code
     private HashMap<String, Integer> linksInFile = new HashMap<String, Integer>();
     //Stores emails and if they're valid
@@ -78,7 +89,7 @@ public class PdfFile {
         put("links", "null");
         put("grammar", "null");
     }};
-
+    private ArrayList<String> locatedURLs = new ArrayList<>();
     //Get and set methods
     public void setWordCount() throws IOException {
         int count = 0;
@@ -144,10 +155,73 @@ public class PdfFile {
     public Integer getLinkResponseCode(String link){
         return this.linksInFile.get(link);
     }
+    public ArrayList<String> getLocatedURLs()
+    {
+        return this.locatedURLs;
+    }
+    public void findUrl() throws IOException {
+        //https://svn.apache.org/repos/asf/pdfbox/trunk/examples/src/main/java/org/apache/pdfbox/examples/pdmodel/PrintURLs.java
+        pdfPageNum = 0;
+        for( PDPage page : doc.getPages() )
+        {
+            pdfPageNum++;
+            PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+            List<PDAnnotation> annotations = page.getAnnotations();
+            //first setup text extraction regions
+            for( int j=0; j<annotations.size(); j++ )
+            {
+                PDAnnotation annot = annotations.get(j);
+                if( annot instanceof PDAnnotationLink)
+                {
+                    PDAnnotationLink link = (PDAnnotationLink)annot;
+                    PDRectangle rect = link.getRectangle();
+                    //need to reposition link rectangle to match text space
+                    float x = rect.getLowerLeftX();
+                    float y = rect.getUpperRightY();
+                    float width = rect.getWidth();
+                    float height = rect.getHeight();
+                    int rotation = page.getRotation();
+                    if( rotation == 0 )
+                    {
+                        PDRectangle pageSize = page.getMediaBox();
+                        y = pageSize.getHeight() - y;
+                    }
+                    else if( rotation == 90 )
+                    {
+                        //do nothing
+                        System.out.println("Nothing occurred");
+                    }
+
+                    Rectangle2D.Float awtRect = new Rectangle2D.Float( x,y,width,height );
+                    stripper.addRegion( "" + j, awtRect );
+                }
+            }
+
+            stripper.extractRegions( page );
+
+            for( int j=0; j<annotations.size(); j++ )
+            {
+                PDAnnotation annot = annotations.get(j);
+                if( annot instanceof PDAnnotationLink )
+                {
+                    PDAnnotationLink link = (PDAnnotationLink)annot;
+                    PDAction action = link.getAction();
+                    String urlText = stripper.getTextForRegion( "" + j );
+                    if( action instanceof PDActionURI)
+                    {
+                        PDActionURI uri = (PDActionURI)action;
+                        //System.out.println( "Page " + pdfPageNum +":'" + urlText.trim() + "'=" + uri.getURI() );
+                        locatedURLs.add(uri.getURI());
+                    }
+                }
+            }
+        }
+    }
 
     public void createJSON(){
         this.allData = "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
-                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
+                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+
+                "',\n'URLs':'"+getLocatedURLs()+"'}";
 
         Gson gson = new Gson();
 

@@ -3,14 +3,16 @@ package io.jenkins.plugins.docDataValidator;
 import com.google.gson.Gson;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class DocxFile {
     File file;
@@ -27,6 +29,8 @@ public class DocxFile {
         this.setAuthor();
         this.setDateOfCreation();
         this.setFileSize();
+        findUrl();
+        System.out.println("The files found are in " + fileName + " are: "+ getLocatedURLs());
     }
     private String fileName;
     private String Directory;
@@ -37,6 +41,7 @@ public class DocxFile {
     private String author;
     private long fileSize;
     private Date dateOfCreation;
+    private ArrayList<String> locatedURLs = new ArrayList<>();
 
     //Stores each links response code
     private HashMap<String, Integer> linksInFile = new HashMap<String, Integer>();
@@ -124,10 +129,34 @@ public class DocxFile {
     public Integer getLinkResponseCode(String link){
         return this.linksInFile.get(link);
     }
-
+    public ArrayList<String> getLocatedURLs()
+    {
+        return this.locatedURLs;
+    }
+    public void findUrl() throws IOException {
+        try {
+            XWPFWordExtractor xwpfWordExtractor = new XWPFWordExtractor(this.document);
+            Iterator<XWPFParagraph> i = document.getParagraphsIterator();
+            while(i.hasNext()) {
+                XWPFParagraph paragraph = i.next();
+                //Going through paragraph text
+                for (XWPFRun run : paragraph.getRuns()) {
+                    if (run instanceof XWPFHyperlinkRun) {
+                        //Finding the urls
+                        XWPFHyperlink link = ((XWPFHyperlinkRun) run).getHyperlink(document);
+                        String linkURL = link.getURL();
+                        locatedURLs.add(linkURL);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void createJSON(){
         this.allData = "{'name': '" + getFileName() + "',\n 'author': '"+getAuthor()+"',\n 'pagecount': "+getPageCount()+
-                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+"'}";
+                ",\n 'filesize': "+getFileSize()+",\n 'wordcount': "+getWordCount()+",\n 'created': '"+getDateOfCreation()+
+                "',\n'URLs':'"+getLocatedURLs()+"'}";
 
         Gson gson = new Gson();
 

@@ -9,13 +9,14 @@ import java.util.ArrayList;
 public class driver {
 
     //change to accept an array of arrays and create a for loop to enter each to make it.
-    public static void main(String inputDirectory, String outputDirectory, TaskListener listener) throws IOException, InvalidFormatException {
+    public static void main(String inputDirectory, String outputDirectory, TaskListener listener, int urlFlag) throws IOException, InvalidFormatException {
         //main(pdfArray, listener, docxArray, pptxArray, String dir, String outputDir)
         System.out.print("Running second program\n");
 
         FileTypeDetection FilesForClassOne = new FileTypeDetection(inputDirectory);
         FilesForClassOne.setFileNames(listener);
         FileObjectCreation createObj = new FileObjectCreation();
+        LinkDetection linkChecker = new LinkDetection();
 
         createObj.createDocxObjects(FilesForClassOne.getDOCXNames(), inputDirectory,outputDirectory);
         createObj.createPdfObjects(FilesForClassOne.getPDFNames(), inputDirectory,outputDirectory);
@@ -30,9 +31,12 @@ public class driver {
              listener.getLogger().println("file size: " + docs.getFileSize()+"\n");
              listener.getLogger().println("Page count: "+docs.getPageCount()+"\n");
              listener.getLogger().println("Page count: "+docs.getDateOfCreation()+"\n");
-
+             if(urlFlag == 1)
+             {
+                 linkChecker.main(docs.getLocatedURLs(),listener);
+             }
              listener.getLogger().println("\n\n-------------------");
-            docs.createJSON();
+             docs.createJSON();
         }
          listener.getLogger().println("\n\nPrinting pdf file data \n\n-----------------");
         for(PdfFile pdf: createObj.getListOfPdfObjects()){
@@ -46,6 +50,10 @@ public class driver {
              listener.getLogger().println("date created: " + pdf.getFileMonth()+"/"+pdf.getFileDay()+
                     "/"+pdf.getFileYear()+" " +pdf.getFileHour()+":"+pdf.getFileMinute()+":"
                     +pdf.getFileSecond()+"\n");
+            if(urlFlag == 1)
+            {
+                linkChecker.main(pdf.getLocatedURLs(), listener);
+            }
              listener.getLogger().println("\n\n-------------------");
             pdf.createJSON();
         }
@@ -56,7 +64,11 @@ public class driver {
              listener.getLogger().println("Word count: "+ pptx.getWordCount()+"\n");
              listener.getLogger().println("file size: " + pptx.getFileSize()+"\n");
              listener.getLogger().println("Page count: "+ pptx.getNumberOfSlides()+"\n");
-             listener.getLogger().println("date created: " + pptx.getCreationDate());
+             listener.getLogger().println("date created: " + pptx.getCreationDate()+"\n");
+            if(urlFlag == 1)
+            {
+                linkChecker.main(pptx.getLocatedURLs(),listener);
+            }
              listener.getLogger().println("\n\n-------------------");
             pptx.createJSON();
         }

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PptxFile {
     File file;
@@ -43,6 +44,9 @@ public class PptxFile {
         //Issue, this method also counts words in images...
         setWordCount();
 
+        findUrl();
+        System.out.println("The files found are in " + fileName + " are: "+ getLocatedURLs());
+
     }
 
     //variable definitions
@@ -57,6 +61,7 @@ public class PptxFile {
     private long fileSize;
     private int wordCount;
     private String allData;
+    private ArrayList<String> locatedURLs = new ArrayList<>();
 
     //get and set methods
 
@@ -124,10 +129,35 @@ public class PptxFile {
     public int getWordCount() {
         return this.wordCount;
     }
+    public ArrayList<String> getLocatedURLs()
+    {
+        return this.locatedURLs;
+    }
+    public void findUrl() throws IOException {
+        for (XSLFSlide slide : this.pptx.getSlides()) {
+            XSLFShape[] shapes = slide.getShapes().toArray(new XSLFShape[0]);
+            for (XSLFShape shape : shapes) {
+                if (shape instanceof XSLFTextShape) {
+                    XSLFTextShape textShape = (XSLFTextShape) shape;
+                    String text = textShape.getText().trim();
+                    if (text.length() != 0 ) {
+                        if(text.contains("://"))
+                        {
+                            //System.out.println("Text: " + text);
+                            locatedURLs.add(text);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
 
     public void createJSON() {
         this.allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'slide count': " + getNumberOfSlides() +
-                ",\n 'filesize': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationDate() + "'}";
+                ",\n 'filesize': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationDate() +
+                "',\n'URLs':'"+getLocatedURLs()+"'}";
 
         Gson gson = new Gson();
 

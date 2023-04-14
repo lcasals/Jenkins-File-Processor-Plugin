@@ -12,7 +12,7 @@ import hudson.tasks.Builder;
 import jenkins.tasks.SimpleBuildStep;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
-
+import org.kohsuke.stapler.DataBoundSetter;
 import java.io.IOException;
 
 public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep {
@@ -20,6 +20,8 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
     //Getters and setters for Parameters: name
     private final String directory;
     private String outputDirectory;
+    private boolean useFrench;
+    private int urlFlag = 0;
 
 
     @DataBoundConstructor
@@ -27,7 +29,14 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
         this.directory = directory;
         this.outputDirectory = outputDirectory;
     }
+    public boolean isUseFrench() {
+        return useFrench;
+    }
 
+    @DataBoundSetter
+    public void setUseFrench(boolean useFrench) {
+        this.useFrench = useFrench;
+    }
     public String getDirectory() {
         return directory;
     }
@@ -43,20 +52,26 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
         }
         //calling the HelloWorldAction and passing in the name. from "Extend the Plugin" docs:
         run.addAction(new DocDataValidationAction(directory, outputDirectory));
-
         listener.getLogger().println("The directory selected is: " + directory);
         listener.getLogger().println("The output directory selected is: " + outputDirectory);
 
         //calling the main function in the FileTypeDetection.java file and passing the directory path from build step
-        //FileTypeDetection.main(new String[]{directory});
-        //new FileTypeDetection(directory);
+
         try {
             //try instantiating a new object and then call the main function?
-            driver.main(directory, outputDirectory, listener);
-        } catch (Exception e) {
-            listener.getLogger().println("Error running FileTypeDetection: " + e.getMessage());
-        }
+            if(useFrench)
+            {
+                urlFlag = 1;
+                driver.main(directory, outputDirectory, listener, urlFlag);
+            }
+            else
+            {
+                driver.main(directory, outputDirectory, listener, urlFlag);
+            }
 
+        } catch (Exception e) {
+            listener.getLogger().println("Error running Driver: " + e.getMessage());
+        }
     }
 
     @Symbol("validateDocuments")
