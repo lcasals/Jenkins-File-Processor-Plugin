@@ -30,7 +30,7 @@ public class DocxFile {
         this.setDateOfCreation();
         this.setFileSize();
         findUrl();
-        System.out.println("The files found are in " + fileName + " are: "+ getLocatedURLs());
+        System.out.println("The URLs found are in " + fileName + " are: "+ getLocatedURLs());
     }
     private String fileName;
     private String Directory;

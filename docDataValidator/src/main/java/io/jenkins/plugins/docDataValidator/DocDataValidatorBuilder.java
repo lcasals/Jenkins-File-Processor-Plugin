@@ -20,7 +20,7 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
     //Getters and setters for Parameters: name
     private final String directory;
     private String outputDirectory;
-    private boolean useFrench;
+    private boolean enableUrlCheck;
     private int urlFlag = 0;
 
 
@@ -29,13 +29,13 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
         this.directory = directory;
         this.outputDirectory = outputDirectory;
     }
-    public boolean isUseFrench() {
-        return useFrench;
+    public boolean isEnableUrlCheck() {
+        return enableUrlCheck;
     }
 
     @DataBoundSetter
-    public void setUseFrench(boolean useFrench) {
-        this.useFrench = useFrench;
+    public void setEnableUrlCheck(boolean enableUrlCheck) {
+        this.enableUrlCheck = enableUrlCheck;
     }
     public String getDirectory() {
         return directory;
@@ -59,7 +59,7 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
 
         try {
             //try instantiating a new object and then call the main function?
-            if(useFrench)
+            if(enableUrlCheck)
             {
                 urlFlag = 1;
                 driver.main(directory, outputDirectory, listener, urlFlag);

@@ -9,20 +9,22 @@
     <f:entry title="Output Directory Path (optional)" field="outputDirectory">
         <f:textbox />
     </f:entry>
-    <f:advanced>
-            <f:entry title="${%URLs}" field="useFrench"
-                     description="${%Check to validate URLs in files}">
-                <f:checkbox />
-            </f:entry>
-    </f:advanced>
-
 
     <!-- Get the workspace path and store it in the 'workspace' variable -->
     <j:set var="workspace" value="${it.getWorkspace().getRemote()}" />
     <!-- Construct the default output directory path and store it in the 'jsonOutputDir' variable -->
     <j:set var="jsonOutputDir" value="${workspace}/jsonOutput" />
 
-    <h3>Default Output Directory: ${jsonOutputDir}</h3>
+    <div style="margin-bottom: 10px;">
+        <h5>Default Output Directory: ${jsonOutputDir}</h5>
+    </div>
+
+    <f:advanced>
+        <f:entry title="${%URLs}" field="enableUrlCheck"
+                 description="${%Check to validate URLs in files}">
+            <f:checkbox />
+        </f:entry>
+    </f:advanced>
 
 </j:jelly>
 

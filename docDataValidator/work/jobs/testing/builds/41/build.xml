@@ -1,0 +1,31 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause/>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <io.jenkins.plugins.docDataValidator.DocDataValidationAction plugin="document_data_validator@1.0-SNAPSHOT">
+      <directory>C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInput\</directory>
+      <outputDirectory>C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing/jsonOutput/test1</outputDirectory>
+    </io.jenkins.plugins.docDataValidator.DocDataValidationAction>
+  </actions>
+  <queueId>3</queueId>
+  <timestamp>1681513640227</timestamp>
+  <startTime>1681513640238</startTime>
+  <result>SUCCESS</result>
+  <duration>2791</duration>
+  <charset>windows-1252</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing</workspace>
+  <hudsonVersion>2.361.4</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="java.util.Collections$UnmodifiableSet">
+    <c class="sorted-set"/>
+  </culprits>
+</build>
