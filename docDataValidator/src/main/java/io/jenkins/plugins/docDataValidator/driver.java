@@ -74,7 +74,7 @@ public class driver {
             pptx.createJSON();
         }
 
-        System.out.println("\n\nExcel files \n\n---------------");
+        listener.getLogger().println("\n\nExcel files \n\n---------------");
         for(excelFile excel: createObj.getListOfExcelObjects()){
             listener.getLogger().println("name of file: "+excel.getFileName()+"\n");
             listener.getLogger().println("name of author: "+ excel.getAuthor()+"\n");
