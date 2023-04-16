@@ -28,6 +28,7 @@ public class excelFile {
     public excelFile(String name, String Directory, String outputDirectory) throws IOException{
         this.name = name;
         this.Directory = Directory;
+        this.outputDirectory = outputDirectory;
 
         FileInputStream fis = new FileInputStream(new File(Directory+name));
         System.out.println(Directory+name);
@@ -85,6 +86,7 @@ public class excelFile {
     private long fileSize;
     private int rowCount;
     private String creationTime;
+    private String outputDirectory;
 
     // Getters
     public String getFileName() {
@@ -145,7 +147,7 @@ public class excelFile {
         Object jsonObject = gson.fromJson(this.allData, Object.class);
 
         //change this directory to
-        String outputFilePath = "./FileProcessing/src/FileOutput/";
+        String outputFilePath = outputDirectory;
 
         // Write the JSON object to a file
         try (FileWriter fileWriter = new FileWriter(outputFilePath + getFileName() + ".json")) {
