@@ -21,6 +21,7 @@ public class driver {
         createObj.createDocxObjects(FilesForClassOne.getDOCXNames(), inputDirectory,outputDirectory);
         createObj.createPdfObjects(FilesForClassOne.getPDFNames(), inputDirectory,outputDirectory);
         createObj.createPptxObjects(FilesForClassOne.getPPTXNames(),inputDirectory,outputDirectory);
+        createObj.createExcelObjects(FilesForClassOne.getEXCELNames(),inputDirectory,outputDirectory);
 
 
         listener.getLogger().println("\n\n-------------\n\nword documents\n\n-------------");
@@ -71,6 +72,17 @@ public class driver {
             }
              listener.getLogger().println("\n\n-------------------");
             pptx.createJSON();
+        }
+
+        System.out.println("\n\nExcel files \n\n---------------");
+        for(excelFile excel: createObj.getListOfExcelObjects()){
+            listener.getLogger().println("name of file: "+excel.getFileName()+"\n");
+            listener.getLogger().println("name of author: "+ excel.getAuthor()+"\n");
+            listener.getLogger().println("Word count: "+ excel.getWordCount()+"\n");
+            listener.getLogger().println("file size: " + excel.getFileSize()+"\n");
+            listener.getLogger().println("Row count: " + excel.getRowCount()+"\n");
+            listener.getLogger().println("date created: " + excel.getCreationTime());
+            listener.getLogger().println("\n\n-------------------");
         }
 
     }

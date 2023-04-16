@@ -40,6 +40,7 @@ public class FileTypeDetection {
     private static ArrayList<String> pptxNames = new ArrayList<>();
     private static ArrayList<String> docxNames= new ArrayList<>();
     private static ArrayList<String> pdfNames = new ArrayList<>();
+    private ArrayList<String> excelNames = new ArrayList<>();
 
     //if data structure for a specific file type is not created and added to the file organization then it will be added here
     private static ArrayList<String> unknownNames = new ArrayList<>();
@@ -70,6 +71,9 @@ public class FileTypeDetection {
     }
     public ArrayList<String> getPPTXNames(){
         return this.pptxNames;
+    }
+    public ArrayList<String> getEXCELNames(){
+        return this.excelNames;
     }
     public void setFileNames(TaskListener listener) {
         listener.getLogger().println("Working Directory = " + System.getProperty("user.dir"));
@@ -104,6 +108,8 @@ public class FileTypeDetection {
                         pptxNames.add(f.getName());
                     } else if (extension.equals("pdf")) {
                         pdfNames.add(f.getName());
+                    }else if (extension.equals("xlsx")) {
+                        excelNames.add(f.getName());
                     } else {
                         unknownNames.add(f.getName());
                     }
@@ -139,6 +145,15 @@ public class FileTypeDetection {
 
         for (String s : pdfNames) {
             listener.getLogger().println("|\t" + s + "\t\t\t|\n");
+        }
+
+        System.out.println(
+                "---------------------------------------------\n" +
+                        "\t\tfiles in excel\n" +
+                        "---------------------------------------------");
+
+        for (String s : this.excelNames) {
+            System.out.println("|\t"+ s + "\t\t\t|\n");
         }
         listener.getLogger().println(
                 "---------------------------------------------\n" +

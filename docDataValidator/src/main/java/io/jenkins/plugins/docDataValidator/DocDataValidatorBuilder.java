@@ -58,7 +58,7 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
         //calling the main function in the FileTypeDetection.java file and passing the directory path from build step
 
         try {
-            //try instantiating a new object and then call the main function?
+            //try instantiating a new object and then call the main function
             if(enableUrlCheck)
             {
                 urlFlag = 1;

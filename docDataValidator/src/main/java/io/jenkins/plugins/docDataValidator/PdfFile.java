@@ -41,12 +41,12 @@ public class PdfFile {
         setWordCount();
 
         //Laura stuff//
-        this.fileMonth = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.MONTH);
-        this.fileDay = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.DATE);
-        this.fileYear = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.YEAR);
-        this.fileHour = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.HOUR);
-        this.fileMinute = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.MINUTE);
-        this.fileSecond = ((GregorianCalendar) pdd.getCreationDate()).get(Calendar.SECOND);
+        this.fileMonth = (pdd.getCreationDate()).get(Calendar.MONTH);
+        this.fileDay = (pdd.getCreationDate()).get(Calendar.DATE);
+        this.fileYear = (pdd.getCreationDate()).get(Calendar.YEAR);
+        this.fileHour = (pdd.getCreationDate()).get(Calendar.HOUR);
+        this.fileMinute = (pdd.getCreationDate()).get(Calendar.MINUTE);
+        this.fileSecond = (pdd.getCreationDate()).get(Calendar.SECOND);
 
         //Goes through each PDF file and skips all spaces to get appropriate word count
         this.creationDate = getFileMonth()+"/"+getFileDay()+
