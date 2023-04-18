@@ -79,7 +79,7 @@ pipeline {
         stage('Validation') {
             steps {
                 script {
-                    validateDocuments()
+                    validateDocuments(enableUrlCheck: true)
                 }
             }
         }
