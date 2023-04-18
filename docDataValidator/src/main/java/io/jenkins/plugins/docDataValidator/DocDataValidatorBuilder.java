@@ -25,8 +25,12 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
 
 
     @DataBoundConstructor
-    public DocDataValidatorBuilder(String directory, String outputDirectory) {
+    public DocDataValidatorBuilder(String directory) {
         this.directory = directory;
+    }
+
+    @DataBoundSetter
+    public void setOutputDirectory(String outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
     public boolean isEnableUrlCheck() {
