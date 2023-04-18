@@ -16,9 +16,9 @@ Use jenkins dashboard web UI:
 	3. Click on Advanced Settings
 	4. In the Deploy Plugin section, click browse to choose a file and select the .hpi file 
 	5. Click Upload
-May need to restart the Jenkins instance to complete installation![image](https://user-images.githubusercontent.com/69936610/232734856-d2db07f4-4f1c-4927-96b2-082fe28be54a.png)
+May need to restart the Jenkins instance to complete installation
 
-To use the Document Data Validator plugin in a declarative Jenkins pipeline, add the following step to your `Jenkinsfile`:
+### To use the Document Data Validator plugin in a declarative Jenkins pipeline, add the following step to your `Jenkinsfile`:
 ### Windows Systems
 ```
 pipeline {
