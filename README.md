@@ -11,11 +11,11 @@ Document Data Validator is a Jenkins plugin that extracts metadata from PDF, Wor
 ## Usage: 
 ### Importing the plugin into Jenkins: 
 Use jenkins dashboard web UI: 
-	1. Go to jenkins dashboard
-	2. After logging in, click on Manage Jenkins, then Manage Plugins
-	3. Click on Advanced Settings
-	4. In the Deploy Plugin section, click browse to choose a file and select the .hpi file 
-	5. Click Upload
+1. Go to jenkins dashboard
+2. After logging in, click on Manage Jenkins, then Manage Plugins
+3. Click on Advanced Settings
+4. In the Deploy Plugin section, click browse to choose a file and select the .hpi file 
+5. Click Upload
 May need to restart the Jenkins instance to complete installation
 
 ### To use the Document Data Validator plugin in a declarative Jenkins pipeline, add the following step to your `Jenkinsfile`:
