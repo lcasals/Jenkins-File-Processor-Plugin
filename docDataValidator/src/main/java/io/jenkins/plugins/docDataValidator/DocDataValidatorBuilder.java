@@ -18,7 +18,7 @@ import java.io.IOException;
 public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep {
 
     //Getters and setters for Parameters: name
-    private final String directory;
+    private String directory;
     private String outputDirectory;
     private boolean enableUrlCheck;
     private int urlFlag = 0;
@@ -50,12 +50,18 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
 
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
+        // Set the default value for directory (the input directory for files to be scanned) if not provided
+        if (directory == null || directory.isEmpty()) {
+            directory = workspace.getRemote(); // This sets the directory to the workspace root by default
+        }
+
         // Set the default value for outputDirectory if not provided
         if (outputDirectory == null || outputDirectory.isEmpty()) {
             outputDirectory = workspace.getRemote() + "/jsonOutput";
         }
+
         //calling the HelloWorldAction and passing in the name. from "Extend the Plugin" docs:
-        run.addAction(new DocDataValidationAction(directory, outputDirectory));
+        run.addAction(new DocDataValidationAction(directory, outputDirectory, enableUrlCheck));
         listener.getLogger().println("The directory selected is: " + directory);
         listener.getLogger().println("The output directory selected is: " + outputDirectory);
 

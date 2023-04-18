@@ -1,0 +1,34 @@
+Started by user unknown or anonymous
+Running as SYSTEM
+Building in workspace C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing
+The directory selected is: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing
+The output directory selected is: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing/jsonOutput
+Working Directory = C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator
+
+	 Traversing files in directory: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing
+
+File name: jsonOutput
+File name: jsonOutputModule 1 Slides.pptx.json
+
+
+-------------
+
+word documents
+
+-------------
+
+
+Printing pdf file data 
+
+-----------------
+
+
+Powerpoint files 
+
+---------------
+
+
+Excel files 
+
+---------------
+Finished: SUCCESS

@@ -5,6 +5,7 @@ import hudson.model.Run;
 import jenkins.model.RunAction2;
 public class DocDataValidationAction implements RunAction2 {
     private transient Run run;
+
     @Override
     public void onAttached(Run<?, ?> run) {
         this.run = run;
@@ -42,18 +43,24 @@ public class DocDataValidationAction implements RunAction2 {
 
     private String directory;
     private String outputDirectory;
+    private boolean enableUrlCheck;
     //constructor
-    public DocDataValidationAction(String directory, String outputDirectory) {
+    public DocDataValidationAction(String directory, String outputDirectory, boolean enableUrlCheck) {
         this.directory = directory;
         this.outputDirectory = outputDirectory;
+        this.enableUrlCheck = enableUrlCheck;
     }
-    //getter for the name
-    public String getName() {
+    //getters
+    public String getDirectory() {
         return directory;
     }
 
     public String getOutputDirectory() {
         return outputDirectory;
+    }
+
+    public String getUrlValidationStatus() {
+        return enableUrlCheck ? "Enabled" : "Disabled";
     }
 
 
