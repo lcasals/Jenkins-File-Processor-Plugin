@@ -61,15 +61,14 @@ Make sure to include the forward slash at the end.
 ## Default Directories: 
 ### Default Input Directory: 
 The plugin scans for documents in the root of the Jenkins workspace. If you want to specify a different directory, you can provide the `directory` parameter in the `validateDocuments` step as shown above under "Usage"
-Note: when you use a pipeline script and check out files from a GitHub repository, Jenkins creates a workspace folder for the job run. The workspace folder will contain the files and directories from the checked-out repository. The files should be available in the workspace folder when the plugin is called.
+- Note: when you use a pipeline script and check out files from a GitHub repository, Jenkins creates a workspace folder for the job run. The workspace folder will contain the files and directories from the checked-out repository. The files should be available in the workspace folder when the plugin is called.
 
 ### Default JSON Output Directory: 
 The plugin saves metadata and error information in JSON files, which are stored in a directory named jsonOutput inside the Jenkins workspace. If you want to specify a different output directory, you can provide the outputDirectory parameter in the validateDocuments step as shown above under "Usage"
 ## Using the Default Input and Output Directories: 
 By not providing the directory and outputDirectory parameters, the plugin will use the default input directory (the root of the Jenkins workspace) to scan for documents and the default output directory (jsonOutput inside the Jenkins workspace) to save the JSON files with metadata.
 
-## Using Default Directories in a Jenkins Pipeline
-
+### Using Default Directories in a Jenkins Pipeline
 To use the default input and output directories in your Jenkins pipeline, you don't need to provide the `directory` and `outputDirectory` parameters in the `validateDocuments` step. Here's an example of how to use the default directories in a Jenkinsfile:
 
 ```groovy
