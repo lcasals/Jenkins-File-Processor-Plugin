@@ -1,10 +1,10 @@
 # Jenkins-Document-Data-Validator
 Document Data Validator is a Jenkins plugin that extracts metadata from PDF, Word, and PPTX files, validates the content, and saves metadata into JSON files. It detects and lists files in a directory, prints out file information, and report errors such as broken links to the console. 
 ## Features:  
-- Detects and lists files in a directory
+- Detects and lists files in a directory (optional parameter)
 - Extracts metadata from PDF, Word, and PPTX files
-- Validates content for broken links
-- Saves metadata and errors into json files. 
+- Validates content for broken links (optional parameter)
+- Saves metadata and errors into json files in an output directory (optional parameter)
 
 
 
@@ -28,7 +28,7 @@ pipeline {
         stage('Validation') {
             steps {
                 script {
-                    validateDocuments(directory: 'C:\\path\\to\\inputFolder\\')
+                    validateDocuments(directory: 'C:\\path\\to\\inputFolder\\', enableUrlCheck: true)
                 }
             }
         }
@@ -47,7 +47,7 @@ pipeline {
         stage('Validation') {
             steps {
                 script {
-                    validateDocuments(directory: '/path/to/inputFolder/')
+                    validateDocuments(directory: '/path/to/inputFolder/', enableUrlCheck: true)
                 }
             }
         }
@@ -69,7 +69,7 @@ The plugin saves metadata and error information in JSON files, which are stored 
 By not providing the directory and outputDirectory parameters, the plugin will use the default input directory (the root of the Jenkins workspace) to scan for documents and the default output directory (jsonOutput inside the Jenkins workspace) to save the JSON files with metadata.
 
 ### Using Default Directories in a Jenkins Pipeline
-To use the default input and output directories in your Jenkins pipeline, you don't need to provide the `directory` and `outputDirectory` parameters in the `validateDocuments` step. Here's an example of how to use the default directories in a Jenkinsfile:
+To use the default input and output directories in your Jenkins pipeline, you don't need to provide the `directory` and `outputDirectory` parameters in the `validateDocuments` step. Here's an example of how to use the default directories in a Jenkinsfile. note that the enableUrlCheck parameter is also optional:
 
 ```groovy
 pipeline {
@@ -79,7 +79,7 @@ pipeline {
         stage('Validation') {
             steps {
                 script {
-                    validateDocuments(enableUrlCheck: true)
+                    validateDocuments()
                 }
             }
         }
