@@ -14,16 +14,14 @@ import java.util.ArrayList;
 
 public class PptxFile {
     File file;
-    private String outputDirectory;
-    private String directory;
+    private final String outputDirectory;
 
     public PptxFile(String nameOfFile, String directory, String outputDirectory) throws IOException {
         this.file = new File(directory + nameOfFile);
-        this.Directory = directory;
         this.fileName = nameOfFile;
         this.outputDirectory = outputDirectory;
 
-        this.pptx = new XMLSlideShow(new FileInputStream(Directory + fileName));
+        this.pptx = new XMLSlideShow(new FileInputStream(directory + fileName));
 
         //sets the value of fileName to the parameter nameOfFile
 
@@ -41,27 +39,23 @@ public class PptxFile {
         setNumberOfSlides();
 
         //calls the setWordCount method which returns the word count
-        //Issue, this method also counts words in images...
         setWordCount();
 
         findUrl();
-        System.out.println("The URLs found are in " + fileName + " are: "+ getLocatedURLs());
-
     }
 
     //variable definitions
 
-    private String fileName;
-    private String Directory;
+    private final String fileName;
 
-    private XMLSlideShow pptx;
+
+    private final XMLSlideShow pptx;
     private int numberOfSlides;
     private String author;
     private String creationDate;
     private long fileSize;
     private int wordCount;
-    private String allData;
-    private ArrayList<String> locatedURLs = new ArrayList<>();
+    private final ArrayList<String> locatedURLs = new ArrayList<>();
 
     //get and set methods
 
@@ -155,16 +149,14 @@ public class PptxFile {
 
 
     public void createJSON() {
-        this.allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'slide count': " + getNumberOfSlides() +
-                ",\n 'filesize': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationDate() +
-                "',\n'URLs':'"+getLocatedURLs()+"'}";
+        String allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'slide Count': " + getNumberOfSlides() +
+                ",\n 'file Size': " + getFileSize() + ",\n 'word Count': " + getWordCount() + ",\n 'created': '" + getCreationDate() +
+                "',\n'URLs':'" + getLocatedURLs() + "'}";
 
         Gson gson = new Gson();
 
         // Convert the input string to a JSON object
-        Object jsonObject = gson.fromJson(this.allData, Object.class);
-
-        String outputFilePath = outputDirectory;
+        Object jsonObject = gson.fromJson(allData, Object.class);
 
         //Check if Folder exists, if not: create it
         File outputDir = new File(outputDirectory);
@@ -172,7 +164,7 @@ public class PptxFile {
             outputDir.mkdirs();
         }
         // Write the JSON object to a file
-        try (FileWriter fileWriter = new FileWriter(outputFilePath + File.separator + getFileName() + ".json")) {
+        try (FileWriter fileWriter = new FileWriter(outputDirectory + File.separator + getFileName() + ".json")) {
             gson.toJson(jsonObject, fileWriter);
         } catch (IOException e) {
             e.printStackTrace();

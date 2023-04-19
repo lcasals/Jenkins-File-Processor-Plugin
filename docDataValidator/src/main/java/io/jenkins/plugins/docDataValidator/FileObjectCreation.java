@@ -1,6 +1,5 @@
 package io.jenkins.plugins.docDataValidator;
 
-import com.ibm.icu.impl.InvalidFormatException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,10 +7,11 @@ import java.util.ArrayList;
 public class FileObjectCreation {
     private static String directory;
     private String outputDirectory;
-    private ArrayList<DocxFile> listOfDocxObjects = new ArrayList<>();
-    private ArrayList<PptxFile> listOfPptxObjects = new ArrayList<>();
-    private ArrayList<PdfFile> listOfPdfObjects = new ArrayList<>();
-    private ArrayList<excelFile> listOfExcelObjects = new ArrayList<>();
+    private final ArrayList<DocxFile> listOfDocxObjects = new ArrayList<>();
+    private final ArrayList<PptxFile> listOfPptxObjects = new ArrayList<>();
+    private final ArrayList<PdfFile> listOfPdfObjects = new ArrayList<>();
+    private final ArrayList<excelFile> listOfExcelObjects = new ArrayList<>();
+
 
 
     public ArrayList<DocxFile> getListOfDocxObjects() {
@@ -25,7 +25,7 @@ public class FileObjectCreation {
     public void addPptxObject(PptxFile file){ this.listOfPptxObjects.add(file);}
     public void addExcelObject(excelFile file){ this.listOfExcelObjects.add(file);}
 
-    public void createDocxObjects(ArrayList<String> docx, String dir, String outputDir) throws IOException, InvalidFormatException {
+    public void createDocxObjects(ArrayList<String> docx, String dir, String outputDir) throws IOException {
         directory = dir;
         outputDirectory = outputDir;
         for(String file: docx){
@@ -36,7 +36,7 @@ public class FileObjectCreation {
             }
         }
     }
-    public void createPptxObjects(ArrayList<String> pptx, String dir, String outputDir) throws IOException, InvalidFormatException {
+    public void createPptxObjects(ArrayList<String> pptx, String dir, String outputDir) throws IOException {
         directory = dir;
         outputDirectory = outputDir;
         for(String file: pptx){
@@ -50,8 +50,9 @@ public class FileObjectCreation {
             addPdfObject(new PdfFile(file, directory, this.outputDirectory));
         }
     }
-    public void createExcelObjects(ArrayList<String> excel, String dir, String outputDirectory) throws IOException {
+    public void createExcelObjects(ArrayList<String> excel, String dir, String outputDir) throws IOException {
         directory = dir;
+        outputDirectory = outputDir;
         for(String file:excel) {
             addExcelObject(new excelFile(file, directory,this.outputDirectory ));
         }

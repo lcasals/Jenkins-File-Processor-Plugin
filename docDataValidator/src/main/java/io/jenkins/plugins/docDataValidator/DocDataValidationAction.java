@@ -1,4 +1,4 @@
-/*HelloWorld Action  */
+/*DocDataValidator Action*/
 
 package io.jenkins.plugins.docDataValidator;
 import hudson.model.Run;
@@ -40,8 +40,8 @@ public class DocDataValidationAction implements RunAction2 {
 
 
 
-    private String directory;
-    private String outputDirectory;
+    private final String directory;
+    private final String outputDirectory;
     //constructor
     public DocDataValidationAction(String directory, String outputDirectory) {
         this.directory = directory;

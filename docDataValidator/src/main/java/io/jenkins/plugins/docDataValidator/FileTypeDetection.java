@@ -1,17 +1,16 @@
 package io.jenkins.plugins.docDataValidator;
 
-import com.ibm.icu.impl.InvalidFormatException;
 import hudson.model.TaskListener;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class FileTypeDetection {
     //Path to input
     public FileTypeDetection(String DIRECTORY){
-        this.directory = DIRECTORY;
+        directory = DIRECTORY;
     }
     private static String directory;
     public static String getDirectory()
@@ -19,61 +18,37 @@ public class FileTypeDetection {
         return directory;
     }
 
-    public static void setDIRECTORY(String dir)
-    {
-        directory = dir;
-    }
-
-    //getting file counts --> convert counts to hashmaps "name / count" easier to access and less commands.
-
-    private static HashMap<String, Integer> fileCount = new HashMap<>();
+    //getting file counts --> convert counts to hashmaps "name / count" easier to access and fewer commands.
+    private static final HashMap<String, Integer> fileCount = new HashMap<>();
 
     private static int totalCount = 0;
 
-    public static int updateTotalCount(){
-        return totalCount = totalCount+1;
-    }
-    public static int getTotalCount(){
-        return totalCount;
+    public static void updateTotalCount(){
+        totalCount = totalCount + 1;
     }
     //data structures to store names of files in dependent on file type
-    private static ArrayList<String> pptxNames = new ArrayList<>();
-    private static ArrayList<String> docxNames= new ArrayList<>();
-    private static ArrayList<String> pdfNames = new ArrayList<>();
-    private ArrayList<String> excelNames = new ArrayList<>();
+    private static final ArrayList<String> pptxNames = new ArrayList<>();
+    private final static ArrayList<String> docxNames= new ArrayList<>();
+    private final static ArrayList<String> pdfNames = new ArrayList<>();
+    private final static ArrayList<String> excelNames = new ArrayList<>();
 
     //if data structure for a specific file type is not created and added to the file organization then it will be added here
-    private static ArrayList<String> unknownNames = new ArrayList<>();
+    private final ArrayList<String> unknownNames = new ArrayList<>();
 
-    public static ArrayList<ArrayList<String>>  fileArrayOfArrays= new ArrayList<>();
-
-    public static void addArrayToArrayOfArrays(ArrayList<String> fileArray){
-        fileArrayOfArrays.add(fileArray);
-    }
-    public static ArrayList<ArrayList<String>> getfileArrayOfArrays(){
-        return fileArrayOfArrays;
-    }
-
-    public static void setPDFNames() {
-
-    }
-    public static void setDOCXNames(){
-
-    }
-    public static void setPPTXNames(){
-
-    }
     public ArrayList<String> getPDFNames(){
-        return this.pdfNames;
+        return pdfNames;
     }
     public ArrayList<String> getDOCXNames(){
-        return this.docxNames;
+        return docxNames;
     }
     public ArrayList<String> getPPTXNames(){
-        return this.pptxNames;
+        return pptxNames;
     }
     public ArrayList<String> getEXCELNames(){
-        return this.excelNames;
+        return excelNames;
+    }
+    public ArrayList<String> getUNKNOWNNames(){
+        return unknownNames;
     }
     public void setFileNames(TaskListener listener) {
         listener.getLogger().println("Working Directory = " + System.getProperty("user.dir"));
@@ -81,7 +56,8 @@ public class FileTypeDetection {
 
         //Begins traversing file directory
         try {
-            for (File f : new File(directory).listFiles()) {
+            //(File f : new File(directory).listFiles())
+            for (File f : Objects.requireNonNull(new File(directory).listFiles())) {
 
                 updateTotalCount();
                 String fileName = f.toString();
@@ -102,16 +78,22 @@ public class FileTypeDetection {
 
                     }
                     //storing doc names into appropriate data structures
-                    if (extension.equals("docx")) {
-                        docxNames.add(f.getName());
-                    } else if (extension.equals("pptx")) {
-                        pptxNames.add(f.getName());
-                    } else if (extension.equals("pdf")) {
-                        pdfNames.add(f.getName());
-                    }else if (extension.equals("xlsx")) {
-                        excelNames.add(f.getName());
-                    } else {
-                        unknownNames.add(f.getName());
+                    switch (extension) {
+                        case "docx":
+                            docxNames.add(f.getName());
+                            break;
+                        case "pptx":
+                            pptxNames.add(f.getName());
+                            break;
+                        case "pdf":
+                            pdfNames.add(f.getName());
+                            break;
+                        case "xlsx":
+                            excelNames.add(f.getName());
+                            break;
+                        default:
+                            unknownNames.add(f.getName());
+                            break;
                     }
                 }
             }
@@ -119,51 +101,4 @@ public class FileTypeDetection {
             System.out.println("File not found: " + e);
         }
     }
-
-    public void printFileNames(TaskListener listener) {
-        //printing content of each array
-        listener.getLogger().println(
-                "---------------------------------------------\n" +
-                        "\t\tfiles in docx\n" +
-                        "---------------------------------------------");
-
-        for (String s : docxNames) {
-            listener.getLogger().println("|\t" + s + "\t\t\t|\n");
-        }
-        listener.getLogger().println(
-                "---------------------------------------------\n" +
-                        "\t\tfiles in pptx\n" +
-                        "---------------------------------------------");
-
-        for (String s : pptxNames) {
-            listener.getLogger().println("|\t" + s + "\t\t\t|\n");
-        }
-        listener.getLogger().println(
-                "---------------------------------------------\n" +
-                        "\t\tfiles in pdf\n" +
-                        "---------------------------------------------");
-
-        for (String s : pdfNames) {
-            listener.getLogger().println("|\t" + s + "\t\t\t|\n");
-        }
-
-        System.out.println(
-                "---------------------------------------------\n" +
-                        "\t\tfiles in excel\n" +
-                        "---------------------------------------------");
-
-        for (String s : this.excelNames) {
-            System.out.println("|\t"+ s + "\t\t\t|\n");
-        }
-        listener.getLogger().println(
-                "---------------------------------------------\n" +
-                        "\t\tOther files\n" +
-                        "---------------------------------------------");
-
-        for (String s : unknownNames) {
-            listener.getLogger().println("|\t" + s + "\t\t\t|\n");
-        }
-    }
-
-
 }
