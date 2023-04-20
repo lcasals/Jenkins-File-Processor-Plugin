@@ -1,5 +1,6 @@
 package io.jenkins.plugins.docDataValidator;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
@@ -48,7 +49,8 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
     }
 
     @Override
-    public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
+    public void perform(@NonNull Run<?, ?> run, @NonNull FilePath workspace, @NonNull EnvVars env,
+                        @NonNull Launcher launcher, @NonNull TaskListener listener) throws InterruptedException, IOException {
         // Set the default value for directory (the input directory for files to be scanned) if not provided
         if (directory == null || directory.isEmpty()) {
             directory = workspace.getRemote(); // This sets the directory to the workspace root by default
@@ -93,6 +95,7 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
             return true;
         }
         //display name for the Build step. will show up when adding plugin as a build step in the dashboard
+        @NonNull
         @Override
         public String getDisplayName() {
             return "Document Data Validator";

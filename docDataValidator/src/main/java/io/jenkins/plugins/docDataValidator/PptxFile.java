@@ -6,27 +6,19 @@ import org.apache.poi.xslf.usermodel.XSLFShape;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class PptxFile {
     File file;
-    private String outputDirectory;
-    private String directory;
+    private final String outputDirectory;
 
     public PptxFile(String nameOfFile, String directory, String outputDirectory) throws IOException {
         this.file = new File(directory + nameOfFile);
-        this.Directory = directory;
         this.fileName = nameOfFile;
         this.outputDirectory = outputDirectory;
 
-        this.pptx = new XMLSlideShow(new FileInputStream(Directory + fileName));
-
-        //sets the value of fileName to the parameter nameOfFile
-
+        this.pptx = new XMLSlideShow(new FileInputStream(directory + fileName));
 
         //calls the setFileSize method and returns the files length in bytes
         setFileSize();
@@ -41,18 +33,14 @@ public class PptxFile {
         setNumberOfSlides();
 
         //calls the setWordCount method which returns the word count
-        //Issue, this method also counts words in images...
         setWordCount();
 
         findUrl();
-        System.out.println("The URLs found are in " + fileName + " are: "+ getLocatedURLs());
-
     }
 
     //variable definitions
 
     private String fileName;
-    private String Directory;
 
     private XMLSlideShow pptx;
     private int numberOfSlides;
@@ -60,8 +48,7 @@ public class PptxFile {
     private String creationDate;
     private long fileSize;
     private int wordCount;
-    private String allData;
-    private ArrayList<String> locatedURLs = new ArrayList<>();
+    private final ArrayList<String> locatedURLs = new ArrayList<>();
 
     //get and set methods
 
@@ -88,7 +75,6 @@ public class PptxFile {
 
     public void setNumberOfSlides() throws IOException {
         int slideCount = 0;
-        //changed slide to ignored...not exactly sure how this works...
         for (XSLFSlide ignored : this.pptx.getSlides()) {
             slideCount++;
         }
@@ -133,7 +119,7 @@ public class PptxFile {
     {
         return this.locatedURLs;
     }
-    public void findUrl() throws IOException {
+    public void findUrl(){
         for (XSLFSlide slide : this.pptx.getSlides()) {
             XSLFShape[] shapes = slide.getShapes().toArray(new XSLFShape[0]);
             for (XSLFShape shape : shapes) {
@@ -155,16 +141,15 @@ public class PptxFile {
 
 
     public void createJSON() {
-        this.allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'slide count': " + getNumberOfSlides() +
-                ",\n 'filesize': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationDate() +
-                "',\n'URLs':'"+getLocatedURLs()+"'}";
+        String allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'slide count': " + getNumberOfSlides() +
+                ",\n 'file size': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationDate() +
+                "',\n'URLs':'" + getLocatedURLs() + "'}";
 
         Gson gson = new Gson();
 
         // Convert the input string to a JSON object
-        Object jsonObject = gson.fromJson(this.allData, Object.class);
+        Object jsonObject = gson.fromJson(allData, Object.class);
 
-        String outputFilePath = outputDirectory;
 
         //Check if Folder exists, if not: create it
         File outputDir = new File(outputDirectory);
@@ -172,7 +157,7 @@ public class PptxFile {
             outputDir.mkdirs();
         }
         // Write the JSON object to a file
-        try (FileWriter fileWriter = new FileWriter(outputFilePath + File.separator + getFileName() + ".json")) {
+        try (FileWriter fileWriter = new FileWriter(outputDirectory+ File.separator + getFileName() + ".json")) {
             gson.toJson(jsonObject, fileWriter);
         } catch (IOException e) {
             e.printStackTrace();

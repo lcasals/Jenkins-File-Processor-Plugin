@@ -15,23 +15,17 @@ import java.nio.file.attribute.BasicFileAttributes;
 public class excelFile {
 
     private String name;
-    private String Directory;
-    private String allData;
 
     /**
      * Constructor
      * @param name name of the file
      * @param Directory directory of the file
      * @throws IOException throws exception if file is not found
-     * @throws InvalidFormatException throws invalidformatexception if the file is not of the correct type
      */
     public excelFile(String name, String Directory, String outputDirectory) throws IOException{
         this.name = name;
-        this.Directory = Directory;
         this.outputDirectory = outputDirectory;
-
         FileInputStream fis = new FileInputStream(new File(Directory+name));
-        System.out.println(Directory+name);
         try{
 
             Workbook workbook = WorkbookFactory.create(fis);
@@ -43,7 +37,6 @@ public class excelFile {
         }
         this.createJSON();
     }
-
 
     private void getFileInformation(String filePath, Workbook workbook) throws IOException {
         Path path = new File(filePath).toPath();
@@ -75,10 +68,7 @@ public class excelFile {
         setRowCount(rowCount);
         setFileSize(attrs.size());
         setCreationTime(attrs.creationTime().toString());
-
-
     }
-
 
     private String fileName;
     private String author;
@@ -138,19 +128,16 @@ public class excelFile {
         this.creationTime = creationTime;
     }
     public void createJSON() {
-        this.allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'pagecount': " + getRowCount() +
-                ",\n 'filesize': " + getFileSize() + ",\n 'wordcount': " + getWordCount() + ",\n 'created': '" + getCreationTime() + "'}";
+        String allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'page count': " + getRowCount() +
+                ",\n 'file size': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationTime() + "'}";
 
         Gson gson = new Gson();
 
         // Convert the input string to a JSON object
-        Object jsonObject = gson.fromJson(this.allData, Object.class);
-
-        //change this directory to
-        String outputFilePath = outputDirectory;
+        Object jsonObject = gson.fromJson(allData, Object.class);
 
         // Write the JSON object to a file
-        try (FileWriter fileWriter = new FileWriter(outputFilePath + getFileName() + ".json")) {
+        try (FileWriter fileWriter = new FileWriter(outputDirectory + File.separator + getFileName() + ".json")) {
             gson.toJson(jsonObject, fileWriter);
         } catch (IOException e) {
             e.printStackTrace();

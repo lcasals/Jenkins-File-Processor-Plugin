@@ -1,4 +1,4 @@
-/*HelloWorld Action  */
+/*DocDataValidator Action  */
 
 package io.jenkins.plugins.docDataValidator;
 import hudson.model.Run;

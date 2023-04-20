@@ -4,19 +4,14 @@ import com.ibm.icu.impl.InvalidFormatException;
 import hudson.model.TaskListener;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class driver {
 
     //change to accept an array of arrays and create a for loop to enter each to make it.
     public static void main(String inputDirectory, String outputDirectory, TaskListener listener, int urlFlag) throws IOException, InvalidFormatException {
-        //main(pdfArray, listener, docxArray, pptxArray, String dir, String outputDir)
-        System.out.print("Running second program\n");
-
         FileTypeDetection FilesForClassOne = new FileTypeDetection(inputDirectory);
         FilesForClassOne.setFileNames(listener);
         FileObjectCreation createObj = new FileObjectCreation();
-        LinkDetection linkChecker = new LinkDetection();
 
         createObj.createDocxObjects(FilesForClassOne.getDOCXNames(), inputDirectory,outputDirectory);
         createObj.createPdfObjects(FilesForClassOne.getPDFNames(), inputDirectory,outputDirectory);
@@ -34,7 +29,7 @@ public class driver {
              listener.getLogger().println("Page count: "+docs.getDateOfCreation()+"\n");
              if(urlFlag == 1)
              {
-                 linkChecker.main(docs.getLocatedURLs(),listener);
+                 LinkDetection.main(docs.getLocatedURLs(),listener);
              }
              listener.getLogger().println("\n\n-------------------");
              docs.createJSON();
@@ -53,7 +48,7 @@ public class driver {
                     +pdf.getFileSecond()+"\n");
             if(urlFlag == 1)
             {
-                linkChecker.main(pdf.getLocatedURLs(), listener);
+                LinkDetection.main(pdf.getLocatedURLs(), listener);
             }
              listener.getLogger().println("\n\n-------------------");
             pdf.createJSON();
@@ -68,7 +63,7 @@ public class driver {
              listener.getLogger().println("date created: " + pptx.getCreationDate()+"\n");
             if(urlFlag == 1)
             {
-                linkChecker.main(pptx.getLocatedURLs(),listener);
+                LinkDetection.main(pptx.getLocatedURLs(),listener);
             }
              listener.getLogger().println("\n\n-------------------");
             pptx.createJSON();
@@ -82,6 +77,14 @@ public class driver {
             listener.getLogger().println("file size: " + excel.getFileSize()+"\n");
             listener.getLogger().println("Row count: " + excel.getRowCount()+"\n");
             listener.getLogger().println("date created: " + excel.getCreationTime());
+            listener.getLogger().println("\n\n-------------------");
+            excel.createJSON();
+        }
+
+        listener.getLogger().println("\n\n-------------\n\nUnknown documents\n\n-------------");
+        for(String unknownFileNames : FilesForClassOne.getUNKNOWNNames())
+        {
+            listener.getLogger().println("name of file: "+ unknownFileNames +"\n");
             listener.getLogger().println("\n\n-------------------");
         }
 

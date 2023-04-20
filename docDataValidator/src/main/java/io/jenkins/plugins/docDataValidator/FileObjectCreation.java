@@ -50,8 +50,9 @@ public class FileObjectCreation {
             addPdfObject(new PdfFile(file, directory, this.outputDirectory));
         }
     }
-    public void createExcelObjects(ArrayList<String> excel, String dir, String outputDirectory) throws IOException {
+    public void createExcelObjects(ArrayList<String> excel, String dir, String outputDir) throws IOException {
         directory = dir;
+        outputDirectory = outputDir;
         for(String file:excel) {
             addExcelObject(new excelFile(file, directory,this.outputDirectory ));
         }

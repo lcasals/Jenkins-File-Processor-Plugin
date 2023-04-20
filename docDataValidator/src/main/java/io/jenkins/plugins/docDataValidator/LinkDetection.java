@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class LinkDetection {
     public static void main(ArrayList<String> locatedURLs, TaskListener listener) {
         if (locatedURLs.size() != 0) {
-            System.out.println("Validating Links...\n");
+            //System.out.println("Validating Links...\n");
             for (String urls : locatedURLs) {
                 // Check if the URL is HTTP or HTTPS (Change: Added check for HTTP/HTTPS URLs)
                 if (urls.startsWith("http://") || urls.startsWith("https://")) {
