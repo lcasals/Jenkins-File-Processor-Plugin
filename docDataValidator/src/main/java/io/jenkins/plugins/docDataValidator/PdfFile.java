@@ -81,14 +81,6 @@ public class PdfFile {
     private String fileName;
     private int pdfPageNum;
     //Stores each links response code
-    private HashMap<String, Integer> linksInFile = new HashMap<String, Integer>();
-    //Stores emails and if they're valid
-    private HashMap<String, Integer> emailsInFile = new HashMap<String, Integer>();
-    private HashMap<String, String> fileValidation = new HashMap<String, String>(){{
-        put("emails","null");
-        put("links", "null");
-        put("grammar", "null");
-    }};
     private ArrayList<String> locatedURLs = new ArrayList<>();
     //Get and set methods
     public void setWordCount() throws IOException {
@@ -130,30 +122,8 @@ public class PdfFile {
     public String getDateOfCreation(){
         return this.creationDate;
     }
-    //returns whether there is a flag in emails, links, or grammar.
-    public String getErrorFlag(String validate){
-        return this.fileValidation.get(validate);
-    }
-    public void setErrorFlag(String validate, String error){
-        this.fileValidation.put(validate, error);
-    }
-
-    //returns the response code for a validating a specific email
-    public Integer getEmailResponse(String email){
-        return this.emailsInFile.get(email);
-    }
-    public void setEmailResponse(String email, Integer code){
-        this.emailsInFile.put(email, code);
-    }
-
     public String getFileName() {
         return this.fileName = fileName;
-    }
-    public void setLinksResponseInFile(String link, Integer code){
-        this.linksInFile.put(link, code);
-    }
-    public Integer getLinkResponseCode(String link){
-        return this.linksInFile.get(link);
     }
     public ArrayList<String> getLocatedURLs()
     {

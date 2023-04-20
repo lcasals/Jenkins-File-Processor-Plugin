@@ -23,7 +23,6 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
     private boolean enableUrlCheck;
     private int urlFlag = 0;
 
-
     @DataBoundConstructor
     public DocDataValidatorBuilder(String directory) {
         this.directory = directory;
