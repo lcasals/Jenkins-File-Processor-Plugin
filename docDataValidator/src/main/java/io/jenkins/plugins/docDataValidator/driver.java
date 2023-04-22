@@ -77,6 +77,10 @@ public class driver {
             listener.getLogger().println("file size: " + excel.getFileSize()+"\n");
             listener.getLogger().println("Row count: " + excel.getRowCount()+"\n");
             listener.getLogger().println("date created: " + excel.getCreationTime());
+            if(urlFlag == 1)
+            {
+                LinkDetection.main(excel.getLocatedURLs(),listener);
+            }
             listener.getLogger().println("\n\n-------------------");
             excel.createJSON();
         }

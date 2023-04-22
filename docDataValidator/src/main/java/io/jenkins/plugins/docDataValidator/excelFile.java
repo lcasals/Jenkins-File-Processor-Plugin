@@ -11,6 +11,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class excelFile {
 
@@ -25,11 +29,12 @@ public class excelFile {
     public excelFile(String name, String Directory, String outputDirectory) throws IOException{
         this.name = name;
         this.outputDirectory = outputDirectory;
-        FileInputStream fis = new FileInputStream(new File(Directory+name));
+        FileInputStream fis = new FileInputStream((Directory+name));
         try{
 
             Workbook workbook = WorkbookFactory.create(fis);
             getFileInformation(Directory, workbook);
+            findUrl(workbook);
 
         }catch(EmptyFileException e){
             System.out.println("File not applicable");
@@ -77,6 +82,7 @@ public class excelFile {
     private int rowCount;
     private String creationTime;
     private String outputDirectory;
+    private final ArrayList<String> locatedURLs = new ArrayList<>();
 
     // Getters
     public String getFileName() {
@@ -127,9 +133,50 @@ public class excelFile {
     public void setCreationTime(String creationTime) {
         this.creationTime = creationTime;
     }
+    public ArrayList<String> getLocatedURLs()
+    {
+        return this.locatedURLs;
+    }
+    private void findUrl(Workbook workbook){
+        setFileName(this.name);
+        try {
+            PackageProperties properties = ((XSSFWorkbook) workbook).getPackage().getPackageProperties();
+            setAuthor(properties.getCreatorProperty().orElse("Unknown"));
+        } catch (InvalidFormatException e) {
+            setAuthor("Unknown");
+            e.printStackTrace();
+        }
+
+        String urlValue = " ";
+        Sheet sheet = workbook.getSheetAt(0);
+        for (Row row : sheet) {
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+                urlValue = cell.toString();
+                if(isValidUrl(urlValue))
+                {
+                    //System.out.println("The value of the cell hyperlink is " + urlValue);
+                    locatedURLs.add(urlValue);
+                }
+            }
+        }
+    }
+    boolean isValidUrl(String urlValue)
+    {
+        String regex = "((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+        Pattern regexPattern = Pattern.compile(regex);
+        if (urlValue == null)
+        {
+            return false;
+        }
+        Matcher acceptedUrl = regexPattern.matcher(urlValue);
+        return acceptedUrl.matches();
+    }
     public void createJSON() {
         String allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'page count': " + getRowCount() +
-                ",\n 'file size': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationTime() + "'}";
+                ",\n 'file size': " + getFileSize() + ",\n 'word count': " + getWordCount() + ",\n 'created': '" + getCreationTime() +
+                "',\n'URLs':'" + getLocatedURLs() + "'}";
 
         Gson gson = new Gson();
 
