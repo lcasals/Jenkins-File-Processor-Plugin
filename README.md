@@ -37,7 +37,7 @@ pipeline {
 
 ```
 Replace "C:\\path\\to\\inputFolder\\" with the path to the directory containing the documents you want to validate.
-make sure to include the backslash at the end
+
 ### Unix Systems
 ```
 pipeline {
