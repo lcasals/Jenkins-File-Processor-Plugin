@@ -101,7 +101,5 @@ public class DocDataValidatorBuilder extends Builder implements SimpleBuildStep 
             return "Document Data Validator";
             //return Messages.HelloWorldBuilder_DescriptorImpl_DisplayName();
         }
-
     }
-
 }

@@ -125,6 +125,7 @@ public class PdfFile {
         return this.locatedURLs;
     }
     public void findUrl() throws IOException {
+        //Apache Poi contained a method for extracted URLs for PDFs, below is the link
         //https://svn.apache.org/repos/asf/pdfbox/trunk/examples/src/main/java/org/apache/pdfbox/examples/pdmodel/PrintURLs.java
         for( PDPage page : doc.getPages() )
         {

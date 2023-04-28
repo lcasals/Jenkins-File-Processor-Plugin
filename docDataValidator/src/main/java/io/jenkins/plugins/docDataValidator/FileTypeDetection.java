@@ -14,11 +14,6 @@ public class FileTypeDetection {
         return directory;
     }
 
-    public static void setDIRECTORY(String dir)
-    {
-        directory = dir;
-    }
-
     //getting file counts --> convert counts to hashmaps "name / count" easier to access and fewer commands.
     private static HashMap<String, Integer> fileCount = new HashMap<>();
 
@@ -53,9 +48,8 @@ public class FileTypeDetection {
         return unknownNames;
     }
     public void setFileNames(TaskListener listener) {
-        listener.getLogger().println("Working Directory = " + System.getProperty("user.dir"));
         listener.getLogger().println("\n\t Traversing files in directory: " + directory + "\n");
-
+        listener.getLogger().println("Beginning to traverse the files");
         //Begins traversing file directory
         try {
             for (File f : new File(directory).listFiles()) {
@@ -79,27 +73,72 @@ public class FileTypeDetection {
 
                     }
                     //storing doc names into appropriate data structures
-                    switch (extension) {
-                        case "docx":
-                            docxNames.add(f.getName());
-                            break;
-                        case "pptx":
-                            pptxNames.add(f.getName());
-                            break;
-                        case "pdf":
-                            pdfNames.add(f.getName());
-                            break;
-                        case "xlsx":
-                            excelNames.add(f.getName());
-                            break;
-                        default:
-                            unknownNames.add(f.getName());
-                            break;
+                    if (extension.equals("docx")) {
+                        docxNames.add(f.getName());
+                    } else if (extension.equals("pptx")) {
+                        pptxNames.add(f.getName());
+                    } else if (extension.equals("pdf")) {
+                        pdfNames.add(f.getName());
+                    }else if (extension.equals("xlsx")) {
+                        excelNames.add(f.getName());
+                    } else {
+                        unknownNames.add(f.getName());
                     }
                 }
             }
+            listener.getLogger().println("printing the values of DocxNames: " + docxNames);
+            listener.getLogger().println("printing the values of PDFNames: " + pdfNames);
+            listener.getLogger().println("printing the values of excelNames: " + excelNames);
+            listener.getLogger().println("printing the values of pptxNames: " + pptxNames);
         } catch (NullPointerException e) {
             System.out.println("File not found: " + e);
         }
+    }
+    /**
+     * Prints the data retrieved from a document and placed into an object to the console
+     */
+    public void printFileNames(TaskListener listener){
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tfiles in docx\n" +
+                        "---------------------------------------------");
+
+        for (String s : docxNames) {
+            listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
+        }
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tfiles in pptx\n" +
+                        "---------------------------------------------");
+
+        for (String s : pptxNames) {
+            listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
+        }
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tfiles in pdf\n" +
+                        "---------------------------------------------");
+
+        for (String s : pdfNames) {
+            listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
+        }
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tfiles in excel\n" +
+                        "---------------------------------------------");
+
+        for (String s : this.excelNames) {
+            listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
+        }
+
+        listener.getLogger().println(
+                "---------------------------------------------\n" +
+                        "\t\tOther files\n" +
+                        "---------------------------------------------");
+
+        for (String s : unknownNames) {
+            listener.getLogger().println("|\t"+ s + "\t\t\t|\n");
+        }
+
     }
 }

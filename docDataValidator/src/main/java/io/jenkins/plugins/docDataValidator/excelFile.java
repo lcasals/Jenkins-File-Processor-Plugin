@@ -162,6 +162,7 @@ public class excelFile {
             }
         }
     }
+    //runs a regex against the text in the file and see if it matches
     boolean isValidUrl(String urlValue)
     {
         String regex = "((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";

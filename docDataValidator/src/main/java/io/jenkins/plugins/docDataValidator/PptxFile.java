@@ -8,6 +8,8 @@ import org.apache.poi.xslf.usermodel.XSLFTextShape;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PptxFile {
     File file;
@@ -73,7 +75,7 @@ public class PptxFile {
         return this.author;
     }
 
-    public void setNumberOfSlides() throws IOException {
+    public void setNumberOfSlides() {
         int slideCount = 0;
         for (XSLFSlide ignored : this.pptx.getSlides()) {
             slideCount++;
@@ -127,9 +129,8 @@ public class PptxFile {
                     XSLFTextShape textShape = (XSLFTextShape) shape;
                     String text = textShape.getText().trim();
                     if (text.length() != 0 ) {
-                        if(text.contains("://"))
+                        if(isValidUrl(text))
                         {
-                            //System.out.println("Text: " + text);
                             locatedURLs.add(text);
                         }
                     }
@@ -138,7 +139,18 @@ public class PptxFile {
             }
         }
     }
-
+    //runs a regex against the text in the file and see if it matches
+    boolean isValidUrl(String urlValue)
+    {
+        String regex = "((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+        Pattern regexPattern = Pattern.compile(regex);
+        if (urlValue == null)
+        {
+            return false;
+        }
+        Matcher acceptedUrl = regexPattern.matcher(urlValue);
+        return acceptedUrl.matches();
+    }
 
     public void createJSON() {
         String allData = "{'name': '" + getFileName() + "',\n 'author': '" + getAuthor() + "',\n 'slide count': " + getNumberOfSlides() +
