@@ -1,0 +1,49 @@
+Started by user unknown or anonymous
+Running as SYSTEM
+Building in workspace C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing
+The directory selected is: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInput
+Working Directory = C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator
+
+	 Traversing files in directory: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInput
+
+File name: Database1.accdb
+File name: empty.txt
+File name: empty1.xlsx
+File name: Group22_DocSecOps_Proposal.docx
+File name: Jarold_Sabillon_Resume.pdf
+File name: Module 1 Slides.pptx
+File name: New Bitmap Image.bmp
+File name: pdftest2.pdf
+File name: testdoc.docx
+---------------------------------------------
+		files in docx
+---------------------------------------------
+|	Group22_DocSecOps_Proposal.docx			|
+
+|	testdoc.docx			|
+
+---------------------------------------------
+		files in pptx
+---------------------------------------------
+|	Module 1 Slides.pptx			|
+
+---------------------------------------------
+		files in pdf
+---------------------------------------------
+|	Jarold_Sabillon_Resume.pdf			|
+
+|	pdftest2.pdf			|
+
+---------------------------------------------
+		Other files
+---------------------------------------------
+|	Database1.accdb			|
+
+|	empty.txt			|
+
+|	empty1.xlsx			|
+
+|	New Bitmap Image.bmp			|
+
+Error running FileTypeDetection: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInputJarold_Sabillon_Resume.pdf (The system cannot find the file specified)
+Finished: SUCCESS

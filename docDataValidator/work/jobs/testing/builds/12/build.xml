@@ -1,0 +1,30 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause/>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <io.jenkins.plugins.docDataValidator.DocDataValidationAction plugin="document_data_validator@1.0-SNAPSHOT">
+      <directory>C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInput\</directory>
+    </io.jenkins.plugins.docDataValidator.DocDataValidationAction>
+  </actions>
+  <queueId>2</queueId>
+  <timestamp>1679476100342</timestamp>
+  <startTime>1679476100365</startTime>
+  <result>SUCCESS</result>
+  <duration>5593</duration>
+  <charset>windows-1252</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing</workspace>
+  <hudsonVersion>2.361.4</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="java.util.Collections$UnmodifiableSet">
+    <c class="sorted-set"/>
+  </culprits>
+</build>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+    <!-- Get the workspace path and store it in the 'workspace' variable. this will be used for both the input and output directories -->
+    <j:set var="workspace" value="${it.getWorkspace().getRemote()}" />
+
+    <f:entry title="Directory Path" field="directory">
+        <f:textbox default="${workspace}" />
+    </f:entry>
+
+    <!-- show the default input directory on the jenkins config gui -->
+    <div style="margin-bottom: 10px;">
+        <h5>Default Input Directory: ${workspace}</h5>
+    </div>
+
+    <f:entry title="Output Directory Path (optional)" field="outputDirectory">
+        <f:textbox />
+    </f:entry>
+
+
+    <!-- Construct the default output directory path and store it in the 'jsonOutputDir' variable -->
+    <j:set var="jsonOutputDir" value="${workspace}/jsonOutput" />
+    <!-- Show the default output directory on the jenkins config gui -->
+    <div style="margin-bottom: 10px;">
+        <h5>Default Output Directory: ${jsonOutputDir}</h5>
+    </div>
+
+    <f:advanced>
+        <f:entry title="${%URLs}" field="enableUrlCheck"
+                 description="${%Check to validate URLs in files}">
+            <f:checkbox />
+        </f:entry>
+    </f:advanced>
+
+</j:jelly>
+
+
+
+        <!--<?xml version="1.0" encoding="UTF-8"?>-->
+        <!--<?jelly escape-by-default='true'?>-->
+        <!--<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">-->
+
+
+        <!--</j:jelly>-->

@@ -1,0 +1,175 @@
+Started by user unknown or anonymous
+Running as SYSTEM
+Building in workspace C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing
+The directory selected is: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInput\
+The output directory selected is: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing/jsonOutput
+Working Directory = C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator
+
+	 Traversing files in directory: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInput\
+
+File name: Database1.accdb
+File name: Jarold_Sabillon_Resume.pdf
+File name: Module 1 Slides.pptx
+File name: pdftest2.pdf
+File name: testdoc.docx
+
+
+-------------
+
+word documents
+
+-------------
+name of file: testdoc.docx
+
+name of author: jarold sabillon
+
+Word count: 8
+
+file size: 13339
+
+Page count: 3
+
+Page count: Tue Mar 14 22:32:00 MDT 2023
+
+http://www.fakeWebsite.com 302 Redirection
+https://www.google.com/ 200 Successful Response
+
+
+-------------------
+name of file: testdoc.docx
+
+name of author: jarold sabillon
+
+Word count: 8
+
+file size: 13339
+
+Page count: 3
+
+Page count: Tue Mar 14 22:32:00 MDT 2023
+
+http://www.fakeWebsite.com 302 Redirection
+https://www.google.com/ 200 Successful Response
+
+
+-------------------
+
+
+Printing pdf file data 
+
+-----------------
+name of file: Jarold_Sabillon_Resume.pdf
+
+name of author: jarold sabillon
+
+page count: 1
+
+file size: 59409
+
+word count: 322
+
+date created: 8/13/2022 10:34:46
+
+Skipping non-HTTP/HTTPS URL: mailto:LinkedIn
+https://github.com/jaroldsabillon 200 Successful Response
+Skipping non-HTTP/HTTPS URL: mailto:Jaroldsabillon2011@gmail.com
+
+
+-------------------
+name of file: pdftest2.pdf
+
+name of author: Jarold Sabillon
+
+page count: 7
+
+file size: 1312888
+
+word count: 14
+
+date created: 1/2/2023 3:53:49
+
+No links were detected in the file
+
+
+-------------------
+name of file: Jarold_Sabillon_Resume.pdf
+
+name of author: jarold sabillon
+
+page count: 1
+
+file size: 59409
+
+word count: 322
+
+date created: 8/13/2022 10:34:46
+
+Skipping non-HTTP/HTTPS URL: mailto:LinkedIn
+https://github.com/jaroldsabillon 200 Successful Response
+Skipping non-HTTP/HTTPS URL: mailto:Jaroldsabillon2011@gmail.com
+
+
+-------------------
+name of file: pdftest2.pdf
+
+name of author: Jarold Sabillon
+
+page count: 7
+
+file size: 1312888
+
+word count: 14
+
+date created: 1/2/2023 3:53:49
+
+No links were detected in the file
+
+
+-------------------
+
+
+Powerpoint files 
+
+---------------
+name of file: Module 1 Slides.pptx
+
+name of author: Tami Sorgente
+
+Word count: 72
+
+file size: 436584
+
+Page count: 36
+
+date created: Sun May 29 11:28:54 MDT 2022
+
+Skipping non-HTTP/HTTPS URL: COT 4420 Theory of Computation
+
+https://www.google.com
+
+
+-------------------
+name of file: Module 1 Slides.pptx
+
+name of author: Tami Sorgente
+
+Word count: 72
+
+file size: 436584
+
+Page count: 36
+
+date created: Sun May 29 11:28:54 MDT 2022
+
+Skipping non-HTTP/HTTPS URL: COT 4420 Theory of Computation
+
+https://www.google.com
+
+
+-------------------
+
+
+Excel files 
+
+---------------
+Finished: SUCCESS

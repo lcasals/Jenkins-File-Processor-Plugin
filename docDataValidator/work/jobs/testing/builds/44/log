@@ -1,0 +1,152 @@
+Started by user unknown or anonymous
+Running as SYSTEM
+Building in workspace C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing
+The directory selected is: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInput\
+The output directory selected is: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\work\workspace\testing/jsonOutput/test1
+Working Directory = C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator
+
+	 Traversing files in directory: C:\Users\omar1\Documents\Projects\Jenkins-file-processor-laura\docDataValidator\fileInput\
+
+File name: Database1.accdb
+File name: Jarold_Sabillon_Resume.pdf
+File name: Module 1 Slides.pptx
+File name: pdftest2.pdf
+File name: testdoc.docx
+
+
+-------------
+
+word documents
+
+-------------
+name of file: testdoc.docx
+
+name of author: jarold sabillon
+
+Word count: 7
+
+file size: 13283
+
+Page count: 3
+
+Page count: Tue Mar 14 22:32:00 MDT 2023
+
+
+
+-------------------
+name of file: testdoc.docx
+
+name of author: jarold sabillon
+
+Word count: 7
+
+file size: 13283
+
+Page count: 3
+
+Page count: Tue Mar 14 22:32:00 MDT 2023
+
+
+
+-------------------
+
+
+Printing pdf file data 
+
+-----------------
+name of file: Jarold_Sabillon_Resume.pdf
+
+name of author: jarold sabillon
+
+page count: 1
+
+file size: 59409
+
+word count: 322
+
+date created: 8/13/2022 10:34:46
+
+
+
+-------------------
+name of file: pdftest2.pdf
+
+name of author: Jarold Sabillon
+
+page count: 7
+
+file size: 1312888
+
+word count: 14
+
+date created: 1/2/2023 3:53:49
+
+
+
+-------------------
+name of file: Jarold_Sabillon_Resume.pdf
+
+name of author: jarold sabillon
+
+page count: 1
+
+file size: 59409
+
+word count: 322
+
+date created: 8/13/2022 10:34:46
+
+
+
+-------------------
+name of file: pdftest2.pdf
+
+name of author: Jarold Sabillon
+
+page count: 7
+
+file size: 1312888
+
+word count: 14
+
+date created: 1/2/2023 3:53:49
+
+
+
+-------------------
+
+
+Powerpoint files 
+
+---------------
+name of file: Module 1 Slides.pptx
+
+name of author: Tami Sorgente
+
+Word count: 72
+
+file size: 436331
+
+Page count: 36
+
+date created: Sun May 29 11:28:54 MDT 2022
+
+
+
+-------------------
+name of file: Module 1 Slides.pptx
+
+name of author: Tami Sorgente
+
+Word count: 72
+
+file size: 436331
+
+Page count: 36
+
+date created: Sun May 29 11:28:54 MDT 2022
+
+
+
+-------------------
+Finished: SUCCESS
